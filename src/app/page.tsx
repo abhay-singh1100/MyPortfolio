@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { FaLinkedin, FaTwitter, FaGithub, FaInstagram, FaEnvelope, FaBriefcase, FaProjectDiagram, FaArrowUp } from "react-icons/fa";
+import { FaLinkedin, FaTwitter, FaGithub, FaInstagram, FaEnvelope, FaBriefcase, FaProjectDiagram, FaArrowUp, FaBars, FaTimes } from "react-icons/fa";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import emailjs from '@emailjs/browser';
@@ -39,26 +39,92 @@ function TypingEffect({ texts }: { texts: string[] }) {
 }
 
 function Navbar({ activeSection }: { activeSection: string }) {
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  // Prevent scrolling when menu is open
+  useEffect(() => {
+    if (menuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => { document.body.style.overflow = ''; };
+  }, [menuOpen]);
+
   return (
-    <nav className="fixed top-0 left-0 w-full z-50 flex items-center justify-center px-8 py-4 bg-white/40 dark:bg-[#0a1833aa] backdrop-blur-md border-b border-gray-200 dark:border-[#4cd7ff33]">
-      <div className="flex items-center gap-6">
-        {navSections.map((s) => (
+    <nav className="fixed top-0 left-0 w-full z-50 bg-white/40 dark:bg-[#0a1833aa] backdrop-blur-md border-b border-gray-200 dark:border-[#4cd7ff33]">
+      <div className="flex items-center justify-center px-4 sm:px-8 py-4">
+        {/* Desktop Nav */}
+        <div className="hidden md:flex items-center gap-6">
+          {navSections.map((s) => (
+            <button
+              key={s.id}
+              onClick={() => scrollToSection(s.id)}
+              className={`text-gray-700 dark:text-white font-medium uppercase tracking-wide text-sm px-3 py-2 rounded transition whitespace-nowrap hover:text-[#4cd7ff] ${activeSection === s.id ? 'bg-[#4cd7ff22] text-[#4cd7ff] font-bold' : ''}`}
+            >
+              {s.label}
+            </button>
+          ))}
+          <div className="w-px h-6 bg-gray-300 dark:bg-gray-600 mx-4"></div>
           <button
-            key={s.id}
-            onClick={() => scrollToSection(s.id)}
-            className={`text-gray-700 dark:text-white font-medium uppercase tracking-wide text-sm px-3 py-2 rounded transition whitespace-nowrap hover:text-[#4cd7ff] ${activeSection === s.id ? 'bg-[#4cd7ff22] text-[#4cd7ff] font-bold' : ''}`}
+            onClick={() => scrollToSection('contact')}
+            className="flex items-center gap-2 text-gray-700 dark:text-white font-medium px-4 py-2 rounded transition hover:text-[#4cd7ff] hover:bg-[#4cd7ff22] focus:outline-none"
           >
-            {s.label}
+            <FaEnvelope className="text-xl" />
+            <span>GET IN TOUCH</span>
           </button>
-        ))}
-        <div className="w-px h-6 bg-gray-300 dark:bg-gray-600 mx-4"></div>
-        <button
-          onClick={() => scrollToSection('contact')}
-          className="flex items-center gap-2 text-gray-700 dark:text-white font-medium px-4 py-2 rounded transition hover:text-[#4cd7ff] hover:bg-[#4cd7ff22] focus:outline-none"
-        >
-          <FaEnvelope className="text-xl" />
-          <span>GET IN TOUCH</span>
-        </button>
+        </div>
+        {/* Mobile Hamburger */}
+        <div className="flex md:hidden w-full justify-between items-center">
+          <span className="font-bold text-lg text-[#4cd7ff] tracking-widest">PORTFOLIO</span>
+          <button
+            className="text-2xl text-gray-700 dark:text-white focus:outline-none"
+            onClick={() => setMenuOpen(true)}
+            aria-label="Open menu"
+          >
+            <FaBars />
+          </button>
+        </div>
+        {/* Mobile Dropdown Menu */}
+        {menuOpen && (
+          <div className="fixed inset-0 z-50 bg-black/60 flex flex-col">
+            <div className="bg-white dark:bg-[#0a1833] shadow-lg w-full p-6 pt-4 flex flex-col gap-4 animate-fadeInDown">
+              <div className="flex justify-between items-center mb-2">
+                <span className="font-bold text-lg text-[#4cd7ff] tracking-widest">PORTFOLIO</span>
+                <button
+                  className="text-2xl text-gray-700 dark:text-white focus:outline-none"
+                  onClick={() => setMenuOpen(false)}
+                  aria-label="Close menu"
+                >
+                  <FaTimes />
+                </button>
+              </div>
+              {navSections.map((s) => (
+                <button
+                  key={s.id}
+                  onClick={() => {
+                    scrollToSection(s.id);
+                    setMenuOpen(false);
+                  }}
+                  className={`text-gray-700 dark:text-white font-medium uppercase tracking-wide text-base px-3 py-2 rounded transition text-left hover:text-[#4cd7ff] ${activeSection === s.id ? 'bg-[#4cd7ff22] text-[#4cd7ff] font-bold' : ''}`}
+                >
+                  {s.label}
+                </button>
+              ))}
+              <button
+                onClick={() => {
+                  scrollToSection('contact');
+                  setMenuOpen(false);
+                }}
+                className="flex items-center gap-2 text-gray-700 dark:text-white font-medium px-4 py-2 rounded transition hover:text-[#4cd7ff] hover:bg-[#4cd7ff22] focus:outline-none mt-2"
+              >
+                <FaEnvelope className="text-xl" />
+                <span>GET IN TOUCH</span>
+              </button>
+            </div>
+            <div className="flex-1" onClick={() => setMenuOpen(false)}></div>
+          </div>
+        )}
       </div>
     </nav>
   );
