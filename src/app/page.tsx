@@ -135,7 +135,7 @@ export default function Home() {
         </div>
         <div className="relative flex flex-col items-center justify-center w-full max-w-xl mx-auto">
           <Image
-            src="/Abhay1.jpg"
+            src="/abhay1.jpg"
             alt="Profile"
             width={500}
             height={500}
@@ -159,7 +159,7 @@ export default function Home() {
       </section>
       {/* Insert About Me section after hero section */}
       <motion.section id="about" className="max-w-3xl mx-auto py-20 px-4 border-b border-[#4cd7ff22] flex flex-col md:flex-row items-center gap-8" initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.7, ease: 'easeOut' }}>
-        <img src="/Abhay1.jpg" alt="Abhay Singh" className="w-32 h-32 rounded-full object-cover border-4 border-[#4cd7ff] shadow-lg mb-4 md:mb-0" />
+        <img src="/abhay1.jpg" alt="Abhay Singh" className="w-32 h-32 rounded-full object-cover border-4 border-[#4cd7ff] shadow-lg mb-4 md:mb-0" />
         <div>
           <h2 className="text-3xl font-bold text-[#4cd7ff] mb-2">About Me</h2>
           <p className="text-lg text-white/90 mb-4">Hi, I&apos;m Abhay Singh—a passionate software developer and AI/ML enthusiast. I love building intelligent solutions, automating workflows, and turning ideas into robust products. My background spans Software development, Machine learning, and data-driven applications.</p>
