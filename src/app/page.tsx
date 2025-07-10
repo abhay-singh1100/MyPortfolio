@@ -76,7 +76,7 @@ function Navbar({ activeSection }: { activeSection: string }) {
         </div>
         {/* Mobile Hamburger */}
         <div className="flex md:hidden w-full justify-between items-center">
-          <span className="font-bold text-lg text-[#4cd7ff] tracking-widest">PORTFOLIO</span>
+          <span className="font-bold text-lg text-[#4cd7ff] tracking-widest">Abhay Singh</span>
           <button
             className="text-2xl text-gray-700 dark:text-white focus:outline-none"
             onClick={() => setMenuOpen(true)}
@@ -90,7 +90,7 @@ function Navbar({ activeSection }: { activeSection: string }) {
           <div className="fixed inset-0 z-50 bg-black/60 flex flex-col">
             <div className="bg-white dark:bg-[#0a1833] shadow-lg w-full p-6 pt-4 flex flex-col gap-4 animate-fadeInDown">
               <div className="flex justify-between items-center mb-2">
-                <span className="font-bold text-lg text-[#4cd7ff] tracking-widest">PORTFOLIO</span>
+                <span className="font-bold text-lg text-[#4cd7ff] tracking-widest">Abhay Singh</span>
                 <button
                   className="text-2xl text-gray-700 dark:text-white focus:outline-none"
                   onClick={() => setMenuOpen(false)}
