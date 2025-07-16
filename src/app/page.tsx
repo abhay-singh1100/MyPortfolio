@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { FaLinkedin, FaTwitter, FaGithub, FaInstagram, FaEnvelope, FaBriefcase, FaProjectDiagram, FaArrowUp, FaBars, FaTimes } from "react-icons/fa";
-import { motion, useAnimation, useInView } from "framer-motion";
+import { motion } from "framer-motion";
 import Image from "next/image";
 import emailjs from '@emailjs/browser';
 
@@ -220,6 +220,14 @@ export default function Home() {
           <div className="rounded-full border border-gray-300 dark:border-blue-200 w-[90vw] h-[90vw] max-w-[900px] max-h-[900px] min-w-[220px] min-h-[220px] mx-auto" />
         </div>
         <div className="relative flex flex-col items-center justify-center w-full max-w-xl mx-auto">
+          {/* Glowing effect behind profile photo */}
+          <motion.div
+            className="absolute top-0 left-1/2 -translate-x-1/2 z-0 w-36 h-36 xs:w-56 xs:h-56 sm:w-80 sm:h-80 rounded-full bg-[#4cd7ff] blur-2xl opacity-60 pointer-events-none"
+            style={{ filter: 'blur(48px)' }}
+            initial={{ scale: 0.95, opacity: 0.7 }}
+            animate={{ scale: [0.95, 1.08, 0.95], opacity: [0.7, 1, 0.7] }}
+            transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+          />
           <Image
             src="/abhay1.jpg"
             alt="Profile"
@@ -559,42 +567,39 @@ function ContactForm() {
 
 // Animate skill bar percentage on reveal
 function SkillBar({ skill, level, img }: { skill: string; level: number; img: string }) {
-  const ref = React.useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.3 });
-  const controls = useAnimation();
-  React.useEffect(() => {
-    if (isInView) {
-      controls.start({ opacity: 1, scale: 1 });
-    }
-  }, [isInView, controls]);
+  const [hovered, setHovered] = React.useState(false);
   return (
     <motion.div
-      ref={ref}
       initial={{ opacity: 0, scale: 0.8 }}
-      animate={controls}
+      animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.5, ease: 'easeOut' }}
       className="w-full sm:w-auto mb-0 flex flex-col items-center hover:scale-105 hover:shadow-lg transition-transform duration-300"
       whileHover={{ scale: 1.05, boxShadow: '0 8px 32px #4cd7ff44' }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      onFocus={() => setHovered(true)}
+      onBlur={() => setHovered(false)}
+      tabIndex={0}
     >
       <div className="flex items-center gap-4 w-full justify-center">
         <div className="relative group">
-          <div className="w-16 h-16 rounded bg-white/10 p-2 cursor-pointer transition-all duration-300 flex items-center justify-center hover:scale-110 hover:bg-white/20">
-            <img src={img} alt={skill + ' icon'} className="w-12 h-12 rounded transition-all duration-300 group-hover:opacity-0 group-hover:scale-90" />
-            <motion.div
-              className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:scale-110"
-              initial={{ opacity: 0 }}
-              animate={isInView ? { opacity: 1 } : { opacity: 0 }}
-              transition={{ delay: 0.2, duration: 0.5, ease: 'easeOut' }}
+          <div className="w-16 h-16 rounded bg-white/10 p-2 cursor-pointer transition-all duration-300 flex items-center justify-center overflow-hidden">
+            <motion.img
+              src={img}
+              alt={skill + ' icon'}
+              className="w-12 h-12 rounded transition-all duration-300"
+              initial={false}
+              animate={hovered ? { opacity: 0, scale: 0.9 } : { opacity: 1, scale: 1 }}
+              transition={{ duration: 0.3, ease: 'easeOut' }}
+            />
+            <motion.span
+              className="absolute inset-0 flex items-center justify-center text-[#4cd7ff] font-bold text-lg animate-pulse"
+              initial={false}
+              animate={hovered ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0 }}
+              transition={{ duration: 0.3, ease: 'easeOut' }}
             >
-              <motion.span
-                className="text-[#4cd7ff] font-bold text-lg animate-pulse"
-                initial={{ scale: 0 }}
-                animate={isInView ? { scale: 1 } : { scale: 0 }}
-                transition={{ delay: 0.3, duration: 0.5, ease: 'easeOut' }}
-              >
-                {level}%
-              </motion.span>
-            </motion.div>
+              {level}%
+            </motion.span>
           </div>
         </div>
         <span className="text-white/90 font-medium text-lg">{skill}</span>
