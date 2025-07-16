@@ -1,9 +1,26 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { FaLinkedin, FaTwitter, FaGithub, FaInstagram, FaEnvelope, FaBriefcase, FaProjectDiagram, FaArrowUp, FaBars, FaTimes } from "react-icons/fa";
-import { motion } from "framer-motion";
+import { motion, useAnimation, useInView } from "framer-motion";
 import Image from "next/image";
 import emailjs from '@emailjs/browser';
+
+// Animation variants for staggered cards and headings (move to top-level)
+const cardVariants = {
+  hidden: (direction: number) => ({ opacity: 0, x: direction }),
+  visible: { opacity: 1, x: 0, transition: { duration: 0.7 } },
+};
+const containerStagger = {
+  visible: {
+    transition: {
+      staggerChildren: 0.18,
+    },
+  },
+};
+const headingVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.7 } },
+};
 
 function scrollToSection(id: string) {
   const el = document.getElementById(id);
@@ -145,24 +162,21 @@ const navSections = [
   { id: "contact", label: "Contact" },
 ];
 
+const certifications = [
+  {
+    icon: <span className="text-2xl">🎓</span>,
+    title: "Paper Presentation at SocProS 2025 – IIT Roorkee",
+    desc: "Presented research on “Threshold Optimized Ensemble Learning for Android Malware Detection” at an international conference.",
+  },
+  {
+    icon: <span className="text-2xl">🏅</span>,
+    title: "Certified AI & Data Quality Analyst – IIT Mandi iHub & NSDC (2024)",
+    desc: "Attained expert-level proficiency in data quality analysis and AI model development by completing a 480-hour, Grade A certified training under the PMKVY scheme, and scoring in the top 5% of the cohort.",
+  },
+];
+
 // Update SkillBar to have a fixed width and center content for horizontal layout
-function SkillBar({ skill, level, img }: { skill: string; level: number; img: string }) {
-  return (
-    <div className="w-full sm:w-auto mb-0 flex flex-col items-center">
-      <div className="flex items-center gap-4 w-full justify-center">
-        <div className="relative group">
-          <div className="w-16 h-16 rounded bg-white/10 p-2 cursor-pointer transition-all duration-300 flex items-center justify-center hover:scale-110 hover:bg-white/20">
-            <img src={img} alt={skill + ' icon'} className="w-12 h-12 rounded transition-all duration-300 group-hover:opacity-0 group-hover:scale-90" />
-            <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:scale-110">
-              <span className="text-[#4cd7ff] font-bold text-lg animate-pulse">{level}%</span>
-            </div>
-          </div>
-        </div>
-        <span className="text-white/90 font-medium text-lg">{skill}</span>
-      </div>
-    </div>
-  );
-}
+
 
 export default function Home() {
   // Initialize EmailJS once when Home mounts
@@ -249,10 +263,15 @@ export default function Home() {
           <div>Bachelor of Technology in Computer Science and Engineering</div>
         </div>
       </motion.section>
-      <motion.section id="experience" className="max-w-4xl mx-auto py-10 xs:py-16 sm:py-24 px-2 xs:px-4 border-b border-[#4cd7ff22]" initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.7, ease: 'easeOut' }}>
-        <h2 className="text-xl xs:text-2xl sm:text-3xl font-bold text-[#4cd7ff] mb-4">Experience</h2>
+      <motion.section id="experience" className="max-w-4xl mx-auto py-10 xs:py-16 sm:py-24 px-2 xs:px-4 border-b border-[#4cd7ff22]" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={containerStagger}>
+        <motion.h2 variants={headingVariants} className="text-xl xs:text-2xl sm:text-3xl font-bold text-[#4cd7ff] mb-4">Experience</motion.h2>
         <div className="space-y-6 xs:space-y-8">
-          <div className="bg-[#18243a] rounded-xl p-3 xs:p-4 sm:p-6 shadow-lg transition-transform duration-300 hover:scale-[1.03] hover:shadow-2xl flex flex-col md:flex-row gap-3 xs:gap-4 items-start">
+          <motion.div
+            custom={-100}
+            variants={cardVariants}
+            className="bg-[#18243a] rounded-xl p-3 xs:p-4 sm:p-6 shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-2xl flex flex-col md:flex-row gap-3 xs:gap-4 items-start"
+            whileHover={{ scale: 1.05, boxShadow: '0 8px 32px #4cd7ff44' }}
+          >
             <FaBriefcase className="text-[#4cd7ff] text-xl xs:text-2xl sm:text-3xl mt-1" aria-label="Experience" />
             <div>
               <div className="font-semibold text-base xs:text-lg sm:text-xl mb-1">Maxim Design Systems <span className="text-[#4cd7ff] font-normal">Software Developer · Internship</span></div>
@@ -263,8 +282,13 @@ export default function Home() {
                 <li>Built a PyQt5-based ML tool in Python and scikit-learn to train neural networks on 780K-row datasets with 95% accuracy and GUI-driven multi-target prediction tool.</li>
               </ul>
             </div>
-          </div>
-          <div className="bg-[#18243a] rounded-xl p-3 xs:p-4 sm:p-6 shadow-lg transition-transform duration-300 hover:scale-[1.03] hover:shadow-2xl flex flex-col md:flex-row gap-3 xs:gap-4 items-start">
+          </motion.div>
+          <motion.div
+            custom={100}
+            variants={cardVariants}
+            className="bg-[#18243a] rounded-xl p-3 xs:p-4 sm:p-6 shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-2xl flex flex-col md:flex-row gap-3 xs:gap-4 items-start"
+            whileHover={{ scale: 1.05, boxShadow: '0 8px 32px #4cd7ff44' }}
+          >
             <FaBriefcase className="text-[#4cd7ff] text-xl xs:text-2xl sm:text-3xl mt-1" aria-label="Experience" />
             <div>
               <div className="font-semibold text-base xs:text-lg sm:text-xl mb-1">Infosys Springboard <span className="text-[#4cd7ff] font-normal">Python Full Stack · Internship</span></div>
@@ -274,13 +298,18 @@ export default function Home() {
                 <li>Engineered a Tkinter-based GUI with SQLite integration for efficient data storage and retrieval, improving usability and reducing the learning curve by 30%.</li>
               </ul>
             </div>
-          </div>
+          </motion.div>
         </div>
       </motion.section>
-      <motion.section id="projects" className="max-w-4xl mx-auto py-10 xs:py-16 sm:py-24 px-2 xs:px-4 border-b border-[#4cd7ff22]" initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.7, ease: 'easeOut' }}>
-        <h2 className="text-xl xs:text-2xl sm:text-3xl font-bold text-[#4cd7ff] mb-4">Projects</h2>
+      <motion.section id="projects" className="max-w-4xl mx-auto py-10 xs:py-16 sm:py-24 px-2 xs:px-4 border-b border-[#4cd7ff22]" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={containerStagger}>
+        <motion.h2 variants={headingVariants} className="text-xl xs:text-2xl sm:text-3xl font-bold text-[#4cd7ff] mb-4">Projects</motion.h2>
         <div className="space-y-6 xs:space-y-8">
-          <div className="bg-[#18243a] rounded-xl p-3 xs:p-4 sm:p-6 shadow-lg transition-transform duration-300 hover:scale-[1.03] hover:shadow-2xl flex flex-col md:flex-row gap-3 xs:gap-4 items-start">
+          <motion.div
+            custom={-100}
+            variants={cardVariants}
+            className="bg-[#18243a] rounded-xl p-3 xs:p-4 sm:p-6 shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-2xl flex flex-col md:flex-row gap-3 xs:gap-4 items-start"
+            whileHover={{ scale: 1.05, boxShadow: '0 8px 32px #4cd7ff44' }}
+          >
             <FaProjectDiagram className="text-[#4cd7ff] text-xl xs:text-2xl sm:text-3xl mt-1" aria-label="Project" />
             <div>
               <div className="font-semibold text-base xs:text-lg sm:text-xl mb-1">Natural Language SQL Query System Using LLMs</div>
@@ -300,8 +329,13 @@ export default function Home() {
                 <a href="https://your-live-demo.com" target="_blank" rel="noopener noreferrer" aria-label="View Live Demo" className="bg-[#4cd7ff] text-[#0a1833] px-3 py-1 rounded hover:bg-[#ff4c60] hover:text-white font-semibold transition focus:outline-none focus:ring-2 focus:ring-[#4cd7ff]">View Live</a>
               </div>
             </div>
-          </div>
-          <div className="bg-[#18243a] rounded-xl p-3 xs:p-4 sm:p-6 shadow-lg transition-transform duration-300 hover:scale-[1.03] hover:shadow-2xl flex flex-col md:flex-row gap-3 xs:gap-4 items-start">
+          </motion.div>
+          <motion.div
+            custom={100}
+            variants={cardVariants}
+            className="bg-[#18243a] rounded-xl p-3 xs:p-4 sm:p-6 shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-2xl flex flex-col md:flex-row gap-3 xs:gap-4 items-start"
+            whileHover={{ scale: 1.05, boxShadow: '0 8px 32px #4cd7ff44' }}
+          >
             <FaProjectDiagram className="text-[#4cd7ff] text-xl xs:text-2xl sm:text-3xl mt-1" aria-label="Project" />
             <div>
               <div className="font-semibold text-base xs:text-lg sm:text-xl mb-1">Android Malware Detection System Using Machine Learning</div>
@@ -321,8 +355,13 @@ export default function Home() {
                 <a href="https://your-live-demo.com" target="_blank" rel="noopener noreferrer" aria-label="View Live Demo" className="bg-[#4cd7ff] text-[#0a1833] px-3 py-1 rounded hover:bg-[#ff4c60] hover:text-white font-semibold transition focus:outline-none focus:ring-2 focus:ring-[#4cd7ff]">View Live</a>
               </div>
             </div>
-          </div>
-          <div className="bg-[#18243a] rounded-xl p-3 xs:p-4 sm:p-6 shadow-lg transition-transform duration-300 hover:scale-[1.03] hover:shadow-2xl flex flex-col md:flex-row gap-3 xs:gap-4 items-start">
+          </motion.div>
+          <motion.div
+            custom={-100}
+            variants={cardVariants}
+            className="bg-[#18243a] rounded-xl p-3 xs:p-4 sm:p-6 shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-2xl flex flex-col md:flex-row gap-3 xs:gap-4 items-start"
+            whileHover={{ scale: 1.05, boxShadow: '0 8px 32px #4cd7ff44' }}
+          >
             <FaProjectDiagram className="text-[#4cd7ff] text-xl xs:text-2xl sm:text-3xl mt-1" aria-label="Project" />
             <div>
               <div className="font-semibold text-base xs:text-lg sm:text-xl mb-1">Real-Time Face Recognition Attendance System</div>
@@ -342,7 +381,7 @@ export default function Home() {
                 <a href="https://your-live-demo.com" target="_blank" rel="noopener noreferrer" aria-label="View Live Demo" className="bg-[#4cd7ff] text-[#0a1833] px-3 py-1 rounded hover:bg-[#ff4c60] hover:text-white font-semibold transition focus:outline-none focus:ring-2 focus:ring-[#4cd7ff]">View Live</a>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </motion.section>
       {/* Replace Skills section content with animated skill bars for main skills */}
@@ -360,20 +399,36 @@ export default function Home() {
           <SkillBar skill="MongoDB" level={70} img="/md.png" />
         </div>
       </motion.section>
-      <motion.section id="certifications" className="max-w-4xl mx-auto py-10 xs:py-16 sm:py-24 px-2 xs:px-4 border-b border-[#4cd7ff22]" initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.7, ease: 'easeOut' }}>
-        <h2 className="text-xl xs:text-2xl sm:text-3xl font-bold text-[#4cd7ff] mb-4">Certifications & Achievements</h2>
-        <ul className="list-disc ml-6 text-white/90 space-y-2 text-xs xs:text-sm sm:text-base">
-          <li>
-            <span className="font-semibold">Paper Presentation at SocProS 2025 – IIT Roorkee:</span> Presented research on “Threshold Optimized Ensemble Learning for Android Malware Detection” at an international conference.
-          </li>
-          <li>
-            <span className="font-semibold">Certified AI & Data Quality Analyst – IIT Mandi iHub & NSDC (2024):</span> Attained expert-level proficiency in data quality analysis and AI model development by completing a 480-hour, Grade A certified training under the PMKVY scheme, and scoring in the top 5% of the cohort.
-          </li>
-        </ul>
+      {/* Add an array for certifications data */}
+      <motion.section id="certifications" className="max-w-4xl mx-auto py-10 xs:py-16 sm:py-24 px-2 xs:px-4 border-b border-[#4cd7ff22]" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={containerStagger}>
+        <motion.h2 variants={headingVariants} className="text-xl xs:text-2xl sm:text-3xl font-bold text-[#4cd7ff] mb-8">Certifications & Achievements</motion.h2>
+        <div className="flex flex-col sm:flex-row gap-6 sm:gap-8 items-stretch justify-center">
+          {certifications.map((cert, idx) => (
+            <motion.div
+              key={cert.title}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.7, delay: idx * 0.15, ease: [0.42, 0, 0.58, 1] }}
+              className="bg-[#18243a] rounded-xl p-6 shadow-lg flex flex-col items-center text-center w-80 min-h-[220px] flex-1 hover:scale-105 hover:shadow-2xl transition-transform duration-300 border border-[#4cd7ff22]"
+              whileHover={{ scale: 1.05, boxShadow: '0 8px 32px #4cd7ff44' }}
+            >
+              <div className="mb-3">{cert.icon}</div>
+              <div className="font-semibold text-base sm:text-lg text-[#4cd7ff] mb-2">{cert.title}</div>
+              <div className="text-xs sm:text-sm text-white/90">{cert.desc}</div>
+            </motion.div>
+          ))}
+        </div>
       </motion.section>
-      <motion.section id="contact" className="max-w-4xl mx-auto py-10 xs:py-16 sm:py-24 px-2 xs:px-4" initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.7, ease: 'easeOut' }}>
-        <h2 className="text-xl xs:text-2xl sm:text-3xl font-bold text-[#4cd7ff] mb-4">Contact</h2>
+      {/* Contact section with animated fields and floating labels */}
+      <motion.section id="contact" className="max-w-4xl mx-auto py-10 xs:py-16 sm:py-24 px-2 xs:px-4" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={containerStagger}>
+        <motion.h2 variants={headingVariants} className="text-xl xs:text-2xl sm:text-3xl font-bold text-[#4cd7ff] mb-4">Contact</motion.h2>
         <ContactForm />
+        <div className="flex gap-4 mt-8 justify-center">
+          <motion.a href="https://www.linkedin.com/in/abhay-singh-1112as" target="_blank" rel="noopener noreferrer" whileHover={{ scale: 1.2 }} className="text-[#4cd7ff] text-2xl" aria-label="LinkedIn"><FaLinkedin /></motion.a>
+          <motion.a href="mailto:abhaychauhan5051a@gmail.com" whileHover={{ scale: 1.2 }} className="text-[#4cd7ff] text-2xl" aria-label="Email"><FaEnvelope /></motion.a>
+          <motion.a href="https://github.com/abhay-singh1100" target="_blank" rel="noopener noreferrer" whileHover={{ scale: 1.2 }} className="text-[#4cd7ff] text-2xl" aria-label="GitHub"><FaGithub /></motion.a>
+        </div>
       </motion.section>
       {showBackToTop && (
         <button
@@ -412,23 +467,19 @@ function ContactForm() {
       return;
     }
     setLoading(true);
-    
     try {
-      // EmailJS configuration
       const templateParams = {
         from_name: name,
         from_email: email,
         message: message,
         to_email: 'abhaychauhan5051a@gmail.com'
       };
-
       const result = await emailjs.send(
-        'service_k6gl45r', // Replace with your EmailJS service ID
-        'template_ezqdh7s', // Replace with your EmailJS template ID
+        'service_k6gl45r',
+        'template_ezqdh7s',
         templateParams,
-        'ztI1rrRIdf6Nv_Rin' // Replace with your EmailJS public key
+        'ztI1rrRIdf6Nv_Rin'
       );
-
       if (result.status === 200) {
         setSuccess(true);
         setName("");
@@ -444,40 +495,110 @@ function ContactForm() {
     }
   };
 
+  // Animation for fields
+  const fields = [
+    { label: "Your Name", value: name, setValue: setName, type: "text" },
+    { label: "Your Email", value: email, setValue: setEmail, type: "email" },
+    { label: "Your Message", value: message, setValue: setMessage, type: "textarea" },
+  ];
+
   return (
-    <form onSubmit={handleSubmit} className="bg-[#18243a] rounded-xl p-8 shadow-lg max-w-xl mx-auto flex flex-col gap-4">
-      {success && <div className="text-green-400 font-semibold mb-2">Thank you! Your message has been sent.</div>}
+    <form onSubmit={handleSubmit} className="bg-[#18243a] rounded-xl p-8 shadow-lg max-w-xl mx-auto flex flex-col gap-6">
+      {success && (
+        <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="flex flex-col items-center text-green-400 font-semibold mb-2">
+          <span className="text-4xl mb-2">✔️</span>
+          Thank you! Your message has been sent.
+        </motion.div>
+      )}
       {error && <div className="text-red-400 font-semibold mb-2">{error}</div>}
-      <input
-        type="text"
-        placeholder="Your Name"
-        className="px-4 py-2 rounded bg-[#22304a] text-white focus:outline-none focus:ring-2 focus:ring-[#4cd7ff]"
-        value={name}
-        onChange={e => setName(e.target.value)}
-        disabled={loading}
-      />
-      <input
-        type="email"
-        placeholder="Your Email"
-        className="px-4 py-2 rounded bg-[#22304a] text-white focus:outline-none focus:ring-2 focus:ring-[#4cd7ff]"
-        value={email}
-        onChange={e => setEmail(e.target.value)}
-        disabled={loading}
-      />
-      <textarea
-        placeholder="Your Message"
-        className="px-4 py-2 rounded bg-[#22304a] text-white focus:outline-none focus:ring-2 focus:ring-[#4cd7ff] min-h-[120px]"
-        value={message}
-        onChange={e => setMessage(e.target.value)}
-        disabled={loading}
-      />
-      <button
+      <div className="flex flex-col gap-4">
+        {fields.map((field, idx) => (
+          <motion.div
+            key={field.label}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.5, delay: idx * 0.1, ease: 'easeOut' }}
+            className="relative"
+          >
+            {field.type !== "textarea" ? (
+              <input
+                type={field.type}
+                className={`peer px-4 py-2 rounded bg-[#22304a] text-white focus:outline-none focus:ring-2 focus:ring-[#4cd7ff] w-full placeholder-transparent`}
+                value={field.value}
+                onChange={e => field.setValue(e.target.value)}
+                placeholder={field.label}
+                disabled={loading}
+                autoComplete="off"
+              />
+            ) : (
+              <textarea
+                className={`peer px-4 py-2 rounded bg-[#22304a] text-white focus:outline-none focus:ring-2 focus:ring-[#4cd7ff] min-h-[120px] w-full placeholder-transparent`}
+                value={field.value}
+                onChange={e => field.setValue(e.target.value)}
+                placeholder={field.label}
+                disabled={loading}
+              />
+            )}
+            <label className="absolute left-4 top-2 text-white/60 text-sm pointer-events-none transition-all duration-200 peer-placeholder-shown:top-2 peer-placeholder-shown:text-white/60 peer-focus:-top-5 peer-focus:text-[#4cd7ff] peer-focus:text-xs peer-focus:font-bold bg-[#18243a] px-1">{field.label}</label>
+          </motion.div>
+        ))}
+      </div>
+      <motion.button
         type="submit"
         className="bg-[#4cd7ff] text-[#0a1833] font-bold px-6 py-2 rounded-full shadow-lg hover:bg-[#ff4c60] hover:text-white transition disabled:opacity-60"
         disabled={loading}
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.98 }}
       >
         {loading ? "Sending..." : "Send Message"}
-      </button>
+      </motion.button>
     </form>
+  );
+}
+
+// Animate skill bar percentage on reveal
+function SkillBar({ skill, level, img }: { skill: string; level: number; img: string }) {
+  const ref = React.useRef(null);
+  const isInView = useInView(ref, { once: true, amount: 0.3 });
+  const controls = useAnimation();
+  React.useEffect(() => {
+    if (isInView) {
+      controls.start({ opacity: 1, scale: 1 });
+    }
+  }, [isInView, controls]);
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, scale: 0.8 }}
+      animate={controls}
+      transition={{ duration: 0.5, ease: 'easeOut' }}
+      className="w-full sm:w-auto mb-0 flex flex-col items-center hover:scale-105 hover:shadow-lg transition-transform duration-300"
+      whileHover={{ scale: 1.05, boxShadow: '0 8px 32px #4cd7ff44' }}
+    >
+      <div className="flex items-center gap-4 w-full justify-center">
+        <div className="relative group">
+          <div className="w-16 h-16 rounded bg-white/10 p-2 cursor-pointer transition-all duration-300 flex items-center justify-center hover:scale-110 hover:bg-white/20">
+            <img src={img} alt={skill + ' icon'} className="w-12 h-12 rounded transition-all duration-300 group-hover:opacity-0 group-hover:scale-90" />
+            <motion.div
+              className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:scale-110"
+              initial={{ opacity: 0 }}
+              animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+              transition={{ delay: 0.2, duration: 0.5, ease: 'easeOut' }}
+            >
+              <motion.span
+                className="text-[#4cd7ff] font-bold text-lg animate-pulse"
+                initial={{ scale: 0 }}
+                animate={isInView ? { scale: 1 } : { scale: 0 }}
+                transition={{ delay: 0.3, duration: 0.5, ease: 'easeOut' }}
+              >
+                {level}%
+              </motion.span>
+            </motion.div>
+          </div>
+        </div>
+        <span className="text-white/90 font-medium text-lg">{skill}</span>
+      </div>
+    </motion.div>
   );
 }
