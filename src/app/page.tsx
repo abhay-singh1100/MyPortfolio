@@ -53,14 +53,15 @@ function Navbar({ activeSection }: { activeSection: string }) {
 
   return (
     <nav className="fixed top-0 left-0 w-full z-50 bg-white/40 dark:bg-[#0a1833aa] backdrop-blur-md border-b border-gray-200 dark:border-[#4cd7ff33]">
-      <div className="flex items-center justify-center px-4 sm:px-8 py-4">
+      <div className="flex items-center justify-center px-2 sm:px-4 md:px-8 py-4">
         {/* Desktop Nav */}
         <div className="hidden md:flex items-center gap-6">
           {navSections.map((s) => (
             <button
               key={s.id}
               onClick={() => scrollToSection(s.id)}
-              className={`text-gray-700 dark:text-white font-medium uppercase tracking-wide text-sm px-3 py-2 rounded transition whitespace-nowrap hover:text-[#4cd7ff] ${activeSection === s.id ? 'bg-[#4cd7ff22] text-[#4cd7ff] font-bold' : ''}`}
+              className={`text-gray-700 dark:text-white font-medium uppercase tracking-wide text-xs sm:text-sm px-3 py-2 rounded transition whitespace-nowrap hover:text-[#4cd7ff] focus:outline-none focus:ring-2 focus:ring-[#4cd7ff] ${activeSection === s.id ? 'bg-[#4cd7ff22] text-[#4cd7ff] font-bold' : ''}`}
+              aria-label={s.label}
             >
               {s.label}
             </button>
@@ -68,17 +69,18 @@ function Navbar({ activeSection }: { activeSection: string }) {
           <div className="w-px h-6 bg-gray-300 dark:bg-gray-600 mx-4"></div>
           <button
             onClick={() => scrollToSection('contact')}
-            className="flex items-center gap-2 text-gray-700 dark:text-white font-medium px-4 py-2 rounded transition hover:text-[#4cd7ff] hover:bg-[#4cd7ff22] focus:outline-none"
+            className="flex items-center gap-2 text-gray-700 dark:text-white font-medium px-4 py-2 rounded transition hover:text-[#4cd7ff] hover:bg-[#4cd7ff22] focus:outline-none focus:ring-2 focus:ring-[#4cd7ff]"
+            aria-label="Get in touch"
           >
-            <FaEnvelope className="text-xl" />
+            <FaEnvelope className="text-xl" aria-label="Email" />
             <span>GET IN TOUCH</span>
           </button>
         </div>
         {/* Mobile Hamburger */}
         <div className="flex md:hidden w-full justify-between items-center">
-          <span className="font-bold text-lg text-[#4cd7ff] tracking-widest">Abhay Singh</span>
+          <span className="font-bold text-base xs:text-lg text-[#4cd7ff] tracking-widest">Abhay Singh</span>
           <button
-            className="text-2xl text-gray-700 dark:text-white focus:outline-none"
+            className="text-2xl text-gray-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#4cd7ff] p-2 rounded"
             onClick={() => setMenuOpen(true)}
             aria-label="Open menu"
           >
@@ -90,9 +92,9 @@ function Navbar({ activeSection }: { activeSection: string }) {
           <div className="fixed inset-0 z-50 bg-black/60 flex flex-col">
             <div className="bg-white dark:bg-[#0a1833] shadow-lg w-full p-6 pt-4 flex flex-col gap-4 animate-fadeInDown">
               <div className="flex justify-between items-center mb-2">
-                <span className="font-bold text-lg text-[#4cd7ff] tracking-widest">Abhay Singh</span>
+                <span className="font-bold text-base xs:text-lg text-[#4cd7ff] tracking-widest">Abhay Singh</span>
                 <button
-                  className="text-2xl text-gray-700 dark:text-white focus:outline-none"
+                  className="text-2xl text-gray-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#4cd7ff] p-2 rounded"
                   onClick={() => setMenuOpen(false)}
                   aria-label="Close menu"
                 >
@@ -106,7 +108,9 @@ function Navbar({ activeSection }: { activeSection: string }) {
                     scrollToSection(s.id);
                     setMenuOpen(false);
                   }}
-                  className={`text-gray-700 dark:text-white font-medium uppercase tracking-wide text-base px-3 py-2 rounded transition text-left hover:text-[#4cd7ff] ${activeSection === s.id ? 'bg-[#4cd7ff22] text-[#4cd7ff] font-bold' : ''}`}
+                  className={`text-gray-700 dark:text-white font-medium uppercase tracking-wide text-base px-3 py-3 rounded transition text-left hover:text-[#4cd7ff] focus:outline-none focus:ring-2 focus:ring-[#4cd7ff] ${activeSection === s.id ? 'bg-[#4cd7ff22] text-[#4cd7ff] font-bold' : ''}`}
+                  aria-label={s.label}
+                  style={{ minHeight: 44 }}
                 >
                   {s.label}
                 </button>
@@ -116,9 +120,11 @@ function Navbar({ activeSection }: { activeSection: string }) {
                   scrollToSection('contact');
                   setMenuOpen(false);
                 }}
-                className="flex items-center gap-2 text-gray-700 dark:text-white font-medium px-4 py-2 rounded transition hover:text-[#4cd7ff] hover:bg-[#4cd7ff22] focus:outline-none mt-2"
+                className="flex items-center gap-2 text-gray-700 dark:text-white font-medium px-4 py-3 rounded transition hover:text-[#4cd7ff] hover:bg-[#4cd7ff22] focus:outline-none focus:ring-2 focus:ring-[#4cd7ff] mt-2"
+                aria-label="Get in touch"
+                style={{ minHeight: 44 }}
               >
-                <FaEnvelope className="text-xl" />
+                <FaEnvelope className="text-xl" aria-label="Email" />
                 <span>GET IN TOUCH</span>
               </button>
             </div>
@@ -139,11 +145,11 @@ const navSections = [
   { id: "contact", label: "Contact" },
 ];
 
-// Update SkillBar to accept an image/icon
+// Update SkillBar to have a fixed width and center content for horizontal layout
 function SkillBar({ skill, level, img }: { skill: string; level: number; img: string }) {
   return (
-    <div className="mb-6">
-      <div className="flex items-center gap-4">
+    <div className="w-full sm:w-auto mb-0 flex flex-col items-center">
+      <div className="flex items-center gap-4 w-full justify-center">
         <div className="relative group">
           <div className="w-16 h-16 rounded bg-white/10 p-2 cursor-pointer transition-all duration-300 flex items-center justify-center hover:scale-110 hover:bg-white/20">
             <img src={img} alt={skill + ' icon'} className="w-12 h-12 rounded transition-all duration-300 group-hover:opacity-0 group-hover:scale-90" />
@@ -194,7 +200,7 @@ export default function Home() {
   return (
     <main className="relative min-h-screen flex flex-col items-center justify-center bg-white dark:bg-gradient-to-br dark:from-[#0a1833] dark:to-[#1a2746] text-gray-900 dark:text-white overflow-x-hidden">
       <Navbar activeSection={activeSection} />
-      <section id="hero" className="relative z-10 flex flex-col items-center justify-center min-h-screen w-full pt-24 overflow-hidden px-4 sm:px-8">
+      <section id="hero" className="relative z-10 flex flex-col items-center justify-center min-h-screen w-full pt-24 overflow-hidden px-2 xs:px-4 sm:px-8">
         {/* Nav links at the top of hero */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none">
           <div className="rounded-full border border-gray-300 dark:border-blue-200 w-[90vw] h-[90vw] max-w-[900px] max-h-[900px] min-w-[220px] min-h-[220px] mx-auto" />
@@ -205,30 +211,30 @@ export default function Home() {
             alt="Profile"
             width={500}
             height={500}
-            className="w-40 h-40 sm:w-64 sm:h-64 rounded-full object-cover border-4 border-white shadow-lg mb-6 z-10"
+            className="w-28 h-28 xs:w-40 xs:h-40 sm:w-64 sm:h-64 rounded-full object-cover border-4 border-white shadow-lg mb-6 z-10"
             priority
           />
           {/* Social icons below profile photo */}
           <div className="flex flex-wrap items-center gap-4 mb-6 justify-center">
-            <a href="https://www.linkedin.com/in/abhay-singh-1112as" target="_blank" rel="noopener noreferrer" className="text-gray-700 dark:text-white text-2xl hover:text-[#0077b5]"><FaLinkedin /></a>
-            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="text-gray-700 dark:text-white text-2xl hover:text-[#1da1f2]"><FaTwitter /></a>
-            <a href="https://github.com/abhay-singh1100" target="_blank" rel="noopener noreferrer" className="text-gray-700 dark:text-white text-2xl hover:text-[#333]"><FaGithub /></a>
-            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-gray-700 dark:text-white text-2xl hover:text-[#e1306c]"><FaInstagram /></a>
+            <a href="https://www.linkedin.com/in/abhay-singh-1112as" target="_blank" rel="noopener noreferrer" className="text-gray-700 dark:text-white text-2xl sm:text-3xl hover:text-[#0077b5] p-2 rounded focus:outline-none focus:ring-2 focus:ring-[#4cd7ff]" aria-label="LinkedIn"><FaLinkedin /></a>
+            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="text-gray-700 dark:text-white text-2xl sm:text-3xl hover:text-[#1da1f2] p-2 rounded focus:outline-none focus:ring-2 focus:ring-[#4cd7ff]" aria-label="Twitter"><FaTwitter /></a>
+            <a href="https://github.com/abhay-singh1100" target="_blank" rel="noopener noreferrer" className="text-gray-700 dark:text-white text-2xl sm:text-3xl hover:text-[#333] p-2 rounded focus:outline-none focus:ring-2 focus:ring-[#4cd7ff]" aria-label="GitHub"><FaGithub /></a>
+            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-gray-700 dark:text-white text-2xl sm:text-3xl hover:text-[#e1306c] p-2 rounded focus:outline-none focus:ring-2 focus:ring-[#4cd7ff]" aria-label="Instagram"><FaInstagram /></a>
           </div>
-          <div className="tracking-[0.5em] text-gray-500 dark:text-gray-300 text-xs md:text-sm mb-2 text-center">SOFTWARE ENGINEER | AI/ML ENTHUSIAST | DATA SCIENTIST</div>
-          <h1 className="text-xl sm:text-2xl md:text-4xl font-extrabold mb-4 text-center flex items-center justify-center gap-3">
+          <div className="tracking-[0.5em] text-gray-500 dark:text-gray-300 text-xs xs:text-sm md:text-base mb-2 text-center">SOFTWARE ENGINEER | AI/ML ENTHUSIAST | DATA SCIENTIST</div>
+          <h1 className="text-base xs:text-xl sm:text-2xl md:text-4xl font-extrabold mb-4 text-center flex items-center justify-center gap-3">
             <TypingEffect texts={["I like riding my 🚲", "Turning coffee into ML models and insight.", "I turn data into decisions.", "I debug reality with machine learning."]} />
           </h1>
-          <a href="/Abhay_Singh_Resume.pdf" download className="inline-block bg-[#4cd7ff] text-[#0a1833] font-bold px-4 sm:px-6 py-2 rounded-full shadow-lg hover:bg-[#ff4c60] hover:text-white transition text-sm sm:text-base">Download Resume (PDF)</a>
+          <a href="/Abhay_Singh_Resume.pdf" download className="inline-block bg-[#4cd7ff] text-[#0a1833] font-bold px-4 sm:px-6 py-2 rounded-full shadow-lg hover:bg-[#ff4c60] hover:text-white transition text-xs xs:text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-[#4cd7ff]">Download Resume (PDF)</a>
         </div>
       </section>
       {/* Insert About Me section after hero section */}
-      <motion.section id="about" className="max-w-3xl mx-auto py-12 sm:py-20 px-4 border-b border-[#4cd7ff22] flex flex-col md:flex-row items-center gap-6 sm:gap-8" initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.7, ease: 'easeOut' }}>
-        <img src="/abhay1.jpg" alt="Abhay Singh" className="w-24 h-24 sm:w-32 sm:h-32 rounded-full object-cover border-4 border-[#4cd7ff] shadow-lg mb-4 md:mb-0" />
+      <motion.section id="about" className="max-w-3xl mx-auto py-8 xs:py-12 sm:py-20 px-2 xs:px-4 border-b border-[#4cd7ff22] flex flex-col md:flex-row items-center gap-4 xs:gap-6 sm:gap-8" initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.7, ease: 'easeOut' }}>
+        <img src="/abhay1.jpg" alt="Abhay Singh" className="w-20 h-20 xs:w-24 xs:h-24 sm:w-32 sm:h-32 rounded-full object-cover border-4 border-[#4cd7ff] shadow-lg mb-4 md:mb-0" />
         <div>
-          <h2 className="text-2xl sm:text-3xl font-bold text-[#4cd7ff] mb-2">About Me</h2>
-          <p className="text-base sm:text-lg text-white/90 mb-4">Hi, I&apos;m Abhay Singh—a passionate software developer and AI/ML enthusiast. I love building intelligent solutions, automating workflows, and turning ideas into robust products. My background spans Software development, Machine learning, and data-driven applications.</p>
-          <ul className="list-disc ml-6 text-white/80 space-y-1 text-sm sm:text-base">
+          <h2 className="text-xl xs:text-2xl sm:text-3xl font-bold text-[#4cd7ff] mb-2">About Me</h2>
+          <p className="text-sm xs:text-base sm:text-lg text-white/90 mb-4">Hi, I&apos;m Abhay Singh—a passionate software developer and AI/ML enthusiast. I love building intelligent solutions, automating workflows, and turning ideas into robust products. My background spans Software development, Machine learning, and data-driven applications.</p>
+          <ul className="list-disc ml-6 text-white/80 space-y-1 text-xs xs:text-sm sm:text-base">
             <li>Real-world coding experience in Python, Java</li>
             <li>Specialized in Machine learning,DeepLearning, NLP, and computer vision</li>
             <li>Strong communicator and team player, with a drive for innovation</li>
@@ -236,34 +242,34 @@ export default function Home() {
         </div>
       </motion.section>
       {/* Section Placeholders */}
-      <motion.section id="education" className="max-w-4xl mx-auto py-16 sm:py-24 px-4 border-b border-[#4cd7ff22]" initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.7, ease: 'easeOut' }}>
-        <h2 className="text-2xl sm:text-3xl font-bold text-[#4cd7ff] mb-4">Education</h2>
-        <div className="text-base sm:text-lg text-white/90">
+      <motion.section id="education" className="max-w-4xl mx-auto py-10 xs:py-16 sm:py-24 px-2 xs:px-4 border-b border-[#4cd7ff22]" initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.7, ease: 'easeOut' }}>
+        <h2 className="text-xl xs:text-2xl sm:text-3xl font-bold text-[#4cd7ff] mb-4">Education</h2>
+        <div className="text-sm xs:text-base sm:text-lg text-white/90">
           <div className="mb-2 font-semibold">COER University</div>
           <div>Bachelor of Technology in Computer Science and Engineering</div>
         </div>
       </motion.section>
-      <motion.section id="experience" className="max-w-4xl mx-auto py-16 sm:py-24 px-4 border-b border-[#4cd7ff22]" initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.7, ease: 'easeOut' }}>
-        <h2 className="text-2xl sm:text-3xl font-bold text-[#4cd7ff] mb-4">Experience</h2>
-        <div className="space-y-8">
-          <div className="bg-[#18243a] rounded-xl p-4 sm:p-6 shadow-lg transition-transform duration-300 hover:scale-[1.03] hover:shadow-2xl flex flex-col md:flex-row gap-4 items-start">
-            <FaBriefcase className="text-[#4cd7ff] text-2xl sm:text-3xl mt-1" />
+      <motion.section id="experience" className="max-w-4xl mx-auto py-10 xs:py-16 sm:py-24 px-2 xs:px-4 border-b border-[#4cd7ff22]" initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.7, ease: 'easeOut' }}>
+        <h2 className="text-xl xs:text-2xl sm:text-3xl font-bold text-[#4cd7ff] mb-4">Experience</h2>
+        <div className="space-y-6 xs:space-y-8">
+          <div className="bg-[#18243a] rounded-xl p-3 xs:p-4 sm:p-6 shadow-lg transition-transform duration-300 hover:scale-[1.03] hover:shadow-2xl flex flex-col md:flex-row gap-3 xs:gap-4 items-start">
+            <FaBriefcase className="text-[#4cd7ff] text-xl xs:text-2xl sm:text-3xl mt-1" aria-label="Experience" />
             <div>
-              <div className="font-semibold text-lg sm:text-xl mb-1">Maxim Design Systems <span className="text-[#4cd7ff] font-normal">Software Developer · Internship</span></div>
+              <div className="font-semibold text-base xs:text-lg sm:text-xl mb-1">Maxim Design Systems <span className="text-[#4cd7ff] font-normal">Software Developer · Internship</span></div>
               <div className="text-xs sm:text-sm text-[#4cd7ff] mb-2">Sep 2022 – Present | Roorkee, Uttarakhand, India | Remote</div>
-              <ul className="list-disc ml-6 text-white/90 space-y-1 text-sm sm:text-base">
+              <ul className="list-disc ml-6 text-white/90 space-y-1 text-xs xs:text-sm sm:text-base">
                 <li>Designed TCURVE, a PyQt5-based multi-panel analysis app for comparing up to 4 datasets; improved analysis speed by 60%.</li>
                 <li>Automated Parameter Optimization by integrating NGSpice and SciPy, reducing fitting time by 80% and achieving &lt;5% RMSE.</li>
                 <li>Built a PyQt5-based ML tool in Python and scikit-learn to train neural networks on 780K-row datasets with 95% accuracy and GUI-driven multi-target prediction tool.</li>
               </ul>
             </div>
           </div>
-          <div className="bg-[#18243a] rounded-xl p-4 sm:p-6 shadow-lg transition-transform duration-300 hover:scale-[1.03] hover:shadow-2xl flex flex-col md:flex-row gap-4 items-start">
-            <FaBriefcase className="text-[#4cd7ff] text-2xl sm:text-3xl mt-1" />
+          <div className="bg-[#18243a] rounded-xl p-3 xs:p-4 sm:p-6 shadow-lg transition-transform duration-300 hover:scale-[1.03] hover:shadow-2xl flex flex-col md:flex-row gap-3 xs:gap-4 items-start">
+            <FaBriefcase className="text-[#4cd7ff] text-xl xs:text-2xl sm:text-3xl mt-1" aria-label="Experience" />
             <div>
-              <div className="font-semibold text-lg sm:text-xl mb-1">Infosys Springboard <span className="text-[#4cd7ff] font-normal">Python Full Stack · Internship</span></div>
+              <div className="font-semibold text-base xs:text-lg sm:text-xl mb-1">Infosys Springboard <span className="text-[#4cd7ff] font-normal">Python Full Stack · Internship</span></div>
               <div className="text-xs sm:text-sm text-[#4cd7ff] mb-2">May 2024 – Jul 2024 | Remote</div>
-              <ul className="list-disc ml-6 text-white/90 space-y-1 text-sm sm:text-base">
+              <ul className="list-disc ml-6 text-white/90 space-y-1 text-xs xs:text-sm sm:text-base">
                 <li>Combined Tesseract OCR, OpenCV, and PyPDF2 to build a bank cheque data extractor, reducing manual entry errors by 15% and increasing processing speed by 20×.</li>
                 <li>Engineered a Tkinter-based GUI with SQLite integration for efficient data storage and retrieval, improving usability and reducing the learning curve by 30%.</li>
               </ul>
@@ -271,78 +277,78 @@ export default function Home() {
           </div>
         </div>
       </motion.section>
-      <motion.section id="projects" className="max-w-4xl mx-auto py-16 sm:py-24 px-4 border-b border-[#4cd7ff22]" initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.7, ease: 'easeOut' }}>
-        <h2 className="text-2xl sm:text-3xl font-bold text-[#4cd7ff] mb-4">Projects</h2>
-        <div className="space-y-8">
-          <div className="bg-[#18243a] rounded-xl p-4 sm:p-6 shadow-lg transition-transform duration-300 hover:scale-[1.03] hover:shadow-2xl flex flex-col md:flex-row gap-4 items-start">
-            <FaProjectDiagram className="text-[#4cd7ff] text-2xl sm:text-3xl mt-1" />
+      <motion.section id="projects" className="max-w-4xl mx-auto py-10 xs:py-16 sm:py-24 px-2 xs:px-4 border-b border-[#4cd7ff22]" initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.7, ease: 'easeOut' }}>
+        <h2 className="text-xl xs:text-2xl sm:text-3xl font-bold text-[#4cd7ff] mb-4">Projects</h2>
+        <div className="space-y-6 xs:space-y-8">
+          <div className="bg-[#18243a] rounded-xl p-3 xs:p-4 sm:p-6 shadow-lg transition-transform duration-300 hover:scale-[1.03] hover:shadow-2xl flex flex-col md:flex-row gap-3 xs:gap-4 items-start">
+            <FaProjectDiagram className="text-[#4cd7ff] text-xl xs:text-2xl sm:text-3xl mt-1" aria-label="Project" />
             <div>
-              <div className="font-semibold text-lg sm:text-xl mb-1">Natural Language SQL Query System Using LLMs</div>
+              <div className="font-semibold text-base xs:text-lg sm:text-xl mb-1">Natural Language SQL Query System Using LLMs</div>
               <div className="text-xs sm:text-sm text-[#4cd7ff] mb-2">May 2025 – Jun 2025</div>
               <div className="flex flex-wrap gap-2 mb-2">
                 <span className="bg-[#4cd7ff22] text-[#4cd7ff] px-2 py-1 rounded text-xs font-semibold">Python</span>
                 <span className="bg-[#4cd7ff22] text-[#4cd7ff] px-2 py-1 rounded text-xs font-semibold">LLMs</span>
                 <span className="bg-[#4cd7ff22] text-[#4cd7ff] px-2 py-1 rounded text-xs font-semibold">NLP</span>
               </div>
-              <ul className="list-disc ml-6 text-white/90 space-y-1 text-sm sm:text-base">
+              <ul className="list-disc ml-6 text-white/90 space-y-1 text-xs xs:text-sm sm:text-base">
                 <li>Developed an NLP system using Mistral LLM to convert English to SQL with 95% accuracy, supporting joins, aggregations, and subqueries.</li>
                 <li>Integrated voice interface with Vosk (ASR) and pyttsx3 (TTS) for hands-free SQL querying (&lt;500ms latency, 85% accuracy in noise).</li>
                 <li>Created a FastAPI + Streamlit app serving 100+ users; cut SQL query latency by 60% using SQLite and responsive UI design.</li>
               </ul>
-              <div className="flex gap-3 mt-3 flex-wrap">
-                <a href="https://github.com/abhay-singh1100/Natural-Language-SQL-Query-System-Using-LLMs-.git" target="_blank" rel="noopener noreferrer" aria-label="View on GitHub" className="bg-[#22304a] text-[#4cd7ff] px-3 py-1 rounded hover:bg-[#4cd7ff] hover:text-white font-semibold transition">GitHub</a>
-                <a href="https://your-live-demo.com" target="_blank" rel="noopener noreferrer" aria-label="View Live Demo" className="bg-[#4cd7ff] text-[#0a1833] px-3 py-1 rounded hover:bg-[#ff4c60] hover:text-white font-semibold transition">View Live</a>
+              <div className="flex gap-2 xs:gap-3 mt-3 flex-wrap">
+                <a href="https://github.com/abhay-singh1100/Natural-Language-SQL-Query-System-Using-LLMs-.git" target="_blank" rel="noopener noreferrer" aria-label="View on GitHub" className="bg-[#22304a] text-[#4cd7ff] px-3 py-1 rounded hover:bg-[#4cd7ff] hover:text-white font-semibold transition focus:outline-none focus:ring-2 focus:ring-[#4cd7ff]">GitHub</a>
+                <a href="https://your-live-demo.com" target="_blank" rel="noopener noreferrer" aria-label="View Live Demo" className="bg-[#4cd7ff] text-[#0a1833] px-3 py-1 rounded hover:bg-[#ff4c60] hover:text-white font-semibold transition focus:outline-none focus:ring-2 focus:ring-[#4cd7ff]">View Live</a>
               </div>
             </div>
           </div>
-          <div className="bg-[#18243a] rounded-xl p-4 sm:p-6 shadow-lg transition-transform duration-300 hover:scale-[1.03] hover:shadow-2xl flex flex-col md:flex-row gap-4 items-start">
-            <FaProjectDiagram className="text-[#4cd7ff] text-2xl sm:text-3xl mt-1" />
+          <div className="bg-[#18243a] rounded-xl p-3 xs:p-4 sm:p-6 shadow-lg transition-transform duration-300 hover:scale-[1.03] hover:shadow-2xl flex flex-col md:flex-row gap-3 xs:gap-4 items-start">
+            <FaProjectDiagram className="text-[#4cd7ff] text-xl xs:text-2xl sm:text-3xl mt-1" aria-label="Project" />
             <div>
-              <div className="font-semibold text-lg sm:text-xl mb-1">Android Malware Detection System Using Machine Learning</div>
+              <div className="font-semibold text-base xs:text-lg sm:text-xl mb-1">Android Malware Detection System Using Machine Learning</div>
               <div className="text-xs sm:text-sm text-[#4cd7ff] mb-2">Nov 2024 – Jan 2025</div>
               <div className="flex flex-wrap gap-2 mb-2">
                 <span className="bg-[#4cd7ff22] text-[#4cd7ff] px-2 py-1 rounded text-xs font-semibold">Python</span>
                 <span className="bg-[#4cd7ff22] text-[#4cd7ff] px-2 py-1 rounded text-xs font-semibold">Machine Learning</span>
                 <span className="bg-[#4cd7ff22] text-[#4cd7ff] px-2 py-1 rounded text-xs font-semibold">Computer Vision</span>
               </div>
-              <ul className="list-disc ml-6 text-white/90 space-y-1 text-sm sm:text-base">
+              <ul className="list-disc ml-6 text-white/90 space-y-1 text-xs xs:text-sm sm:text-base">
                 <li>Trained a stacking model (Logistic Regression, SVM, Random Forest) with 96.9% recall and 84.2% accuracy on malware classification.</li>
                 <li>Increased accuracy by 12% using API and permission-based features; reduced false negatives on obfuscated apps by 18%.</li>
                 <li>Processed 30K+ APKs in a scalable ML pipeline (96% recall), automating malware detection via API and permission feature extraction.</li>
               </ul>
-              <div className="flex gap-3 mt-3 flex-wrap">
-                <a href="https://github.com/abhay-singh1100/Android-Malware-Detection-System-Using-Machine-Learning-.git" target="_blank" rel="noopener noreferrer" aria-label="View on GitHub" className="bg-[#22304a] text-[#4cd7ff] px-3 py-1 rounded hover:bg-[#4cd7ff] hover:text-white font-semibold transition">GitHub</a>
-                <a href="https://your-live-demo.com" target="_blank" rel="noopener noreferrer" aria-label="View Live Demo" className="bg-[#4cd7ff] text-[#0a1833] px-3 py-1 rounded hover:bg-[#ff4c60] hover:text-white font-semibold transition">View Live</a>
+              <div className="flex gap-2 xs:gap-3 mt-3 flex-wrap">
+                <a href="https://github.com/abhay-singh1100/Android-Malware-Detection-System-Using-Machine-Learning-.git" target="_blank" rel="noopener noreferrer" aria-label="View on GitHub" className="bg-[#22304a] text-[#4cd7ff] px-3 py-1 rounded hover:bg-[#4cd7ff] hover:text-white font-semibold transition focus:outline-none focus:ring-2 focus:ring-[#4cd7ff]">GitHub</a>
+                <a href="https://your-live-demo.com" target="_blank" rel="noopener noreferrer" aria-label="View Live Demo" className="bg-[#4cd7ff] text-[#0a1833] px-3 py-1 rounded hover:bg-[#ff4c60] hover:text-white font-semibold transition focus:outline-none focus:ring-2 focus:ring-[#4cd7ff]">View Live</a>
               </div>
             </div>
           </div>
-          <div className="bg-[#18243a] rounded-xl p-4 sm:p-6 shadow-lg transition-transform duration-300 hover:scale-[1.03] hover:shadow-2xl flex flex-col md:flex-row gap-4 items-start">
-            <FaProjectDiagram className="text-[#4cd7ff] text-2xl sm:text-3xl mt-1" />
+          <div className="bg-[#18243a] rounded-xl p-3 xs:p-4 sm:p-6 shadow-lg transition-transform duration-300 hover:scale-[1.03] hover:shadow-2xl flex flex-col md:flex-row gap-3 xs:gap-4 items-start">
+            <FaProjectDiagram className="text-[#4cd7ff] text-xl xs:text-2xl sm:text-3xl mt-1" aria-label="Project" />
             <div>
-              <div className="font-semibold text-lg sm:text-xl mb-1">Real-Time Face Recognition Attendance System</div>
+              <div className="font-semibold text-base xs:text-lg sm:text-xl mb-1">Real-Time Face Recognition Attendance System</div>
               <div className="text-xs sm:text-sm text-[#4cd7ff] mb-2">Aug 2024 – Sep 2024</div>
               <div className="flex flex-wrap gap-2 mb-2">
                 <span className="bg-[#4cd7ff22] text-[#4cd7ff] px-2 py-1 rounded text-xs font-semibold">Python</span>
                 <span className="bg-[#4cd7ff22] text-[#4cd7ff] px-2 py-1 rounded text-xs font-semibold">Computer Vision</span>
                 <span className="bg-[#4cd7ff22] text-[#4cd7ff] px-2 py-1 rounded text-xs font-semibold">FastAPI</span>
               </div>
-              <ul className="list-disc ml-6 text-white/90 space-y-1 text-sm sm:text-base">
+              <ul className="list-disc ml-6 text-white/90 space-y-1 text-xs xs:text-sm sm:text-base">
                 <li>Architected a FaceNet-based recognition engine using Flask and OpenCV, enabling real-time webcam attendance tracking for 100+ users and eliminating manual entry.</li>
                 <li>Deployed 10 REST endpoints covering user enrollment, attendance capture, analytics, and admin control to enable full CRUD capability.</li>
                 <li>Encrypted facial embeddings and implemented session auditing, improving cross-device recognition consistency by 25%.</li>
               </ul>
-              <div className="flex gap-3 mt-3 flex-wrap">
-                <a href="https://github.com/abhay-singh1100/Real-Time-Face-Recognition-Attendance-System-.git" target="_blank" rel="noopener noreferrer" aria-label="View on GitHub" className="bg-[#22304a] text-[#4cd7ff] px-3 py-1 rounded hover:bg-[#4cd7ff] hover:text-white font-semibold transition">GitHub</a>
-                <a href="https://your-live-demo.com" target="_blank" rel="noopener noreferrer" aria-label="View Live Demo" className="bg-[#4cd7ff] text-[#0a1833] px-3 py-1 rounded hover:bg-[#ff4c60] hover:text-white font-semibold transition">View Live</a>
+              <div className="flex gap-2 xs:gap-3 mt-3 flex-wrap">
+                <a href="https://github.com/abhay-singh1100/Real-Time-Face-Recognition-Attendance-System-.git" target="_blank" rel="noopener noreferrer" aria-label="View on GitHub" className="bg-[#22304a] text-[#4cd7ff] px-3 py-1 rounded hover:bg-[#4cd7ff] hover:text-white font-semibold transition focus:outline-none focus:ring-2 focus:ring-[#4cd7ff]">GitHub</a>
+                <a href="https://your-live-demo.com" target="_blank" rel="noopener noreferrer" aria-label="View Live Demo" className="bg-[#4cd7ff] text-[#0a1833] px-3 py-1 rounded hover:bg-[#ff4c60] hover:text-white font-semibold transition focus:outline-none focus:ring-2 focus:ring-[#4cd7ff]">View Live</a>
               </div>
             </div>
           </div>
         </div>
       </motion.section>
       {/* Replace Skills section content with animated skill bars for main skills */}
-      <motion.section id="skills" className="max-w-4xl mx-auto py-16 sm:py-24 px-4 border-b border-[#4cd7ff22]" initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.7, ease: 'easeOut' }}>
-        <h2 className="text-2xl sm:text-3xl font-bold text-[#4cd7ff] mb-4">Skills</h2>
-        <div className="max-w-6xl mx-auto flex flex-wrap justify-center gap-4 sm:gap-8">
+      <motion.section id="skills" className="max-w-4xl mx-auto py-10 xs:py-16 sm:py-24 px-2 xs:px-4 border-b border-[#4cd7ff22]" initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.7, ease: 'easeOut' }}>
+        <h2 className="text-xl xs:text-2xl sm:text-3xl font-bold text-[#4cd7ff] mb-4">Skills</h2>
+        <div className="max-w-6xl mx-auto flex flex-col sm:flex-row flex-wrap items-center justify-center gap-y-4 gap-x-8">
           <SkillBar skill="Python" level={95} img="/python.png" />
           <SkillBar skill="Java" level={85} img="/java.png" />
           <SkillBar skill="JavaScript" level={80} img="/javascript.png" />
@@ -354,9 +360,9 @@ export default function Home() {
           <SkillBar skill="MongoDB" level={70} img="/md.png" />
         </div>
       </motion.section>
-      <motion.section id="certifications" className="max-w-4xl mx-auto py-16 sm:py-24 px-4 border-b border-[#4cd7ff22]" initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.7, ease: 'easeOut' }}>
-        <h2 className="text-2xl sm:text-3xl font-bold text-[#4cd7ff] mb-4">Certifications & Achievements</h2>
-        <ul className="list-disc ml-6 text-white/90 space-y-2 text-sm sm:text-base">
+      <motion.section id="certifications" className="max-w-4xl mx-auto py-10 xs:py-16 sm:py-24 px-2 xs:px-4 border-b border-[#4cd7ff22]" initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.7, ease: 'easeOut' }}>
+        <h2 className="text-xl xs:text-2xl sm:text-3xl font-bold text-[#4cd7ff] mb-4">Certifications & Achievements</h2>
+        <ul className="list-disc ml-6 text-white/90 space-y-2 text-xs xs:text-sm sm:text-base">
           <li>
             <span className="font-semibold">Paper Presentation at SocProS 2025 – IIT Roorkee:</span> Presented research on “Threshold Optimized Ensemble Learning for Android Malware Detection” at an international conference.
           </li>
@@ -365,8 +371,8 @@ export default function Home() {
           </li>
         </ul>
       </motion.section>
-      <motion.section id="contact" className="max-w-4xl mx-auto py-16 sm:py-24 px-4" initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.7, ease: 'easeOut' }}>
-        <h2 className="text-2xl sm:text-3xl font-bold text-[#4cd7ff] mb-4">Contact</h2>
+      <motion.section id="contact" className="max-w-4xl mx-auto py-10 xs:py-16 sm:py-24 px-2 xs:px-4" initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.7, ease: 'easeOut' }}>
+        <h2 className="text-xl xs:text-2xl sm:text-3xl font-bold text-[#4cd7ff] mb-4">Contact</h2>
         <ContactForm />
       </motion.section>
       {showBackToTop && (
