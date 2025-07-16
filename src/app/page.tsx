@@ -1,9 +1,11 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { FaLinkedin, FaTwitter, FaGithub, FaInstagram, FaEnvelope, FaBriefcase, FaProjectDiagram, FaArrowUp, FaBars, FaTimes } from "react-icons/fa";
+import { FiSun, FiMoon } from "react-icons/fi";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import emailjs from '@emailjs/browser';
+import { useTheme } from "./layout";
 
 // Animation variants for staggered cards and headings (move to top-level)
 const cardVariants = {
@@ -57,6 +59,8 @@ function TypingEffect({ texts }: { texts: string[] }) {
 
 function Navbar({ activeSection }: { activeSection: string }) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const { theme, setTheme } = useTheme();
+  const isDark = theme === 'dark';
 
   // Prevent scrolling when menu is open
   useEffect(() => {
@@ -91,6 +95,14 @@ function Navbar({ activeSection }: { activeSection: string }) {
           >
             <FaEnvelope className="text-xl" aria-label="Email" />
             <span>GET IN TOUCH</span>
+          </button>
+          {/* Theme toggle button */}
+          <button
+            onClick={() => setTheme(isDark ? 'light' : 'dark')}
+            className="ml-4 p-2 rounded-full border border-transparent hover:border-[#4cd7ff] bg-white/60 dark:bg-[#22304a] text-[#0a1833] dark:text-white transition focus:outline-none focus:ring-2 focus:ring-[#4cd7ff]"
+            aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+          >
+            {isDark ? <FiSun className="text-xl" /> : <FiMoon className="text-xl" />}
           </button>
         </div>
         {/* Mobile Hamburger */}
@@ -143,6 +155,14 @@ function Navbar({ activeSection }: { activeSection: string }) {
               >
                 <FaEnvelope className="text-xl" aria-label="Email" />
                 <span>GET IN TOUCH</span>
+              </button>
+              {/* Theme toggle for mobile */}
+              <button
+                onClick={() => setTheme(isDark ? 'light' : 'dark')}
+                className="mt-4 p-2 rounded-full border border-transparent hover:border-[#4cd7ff] bg-white/60 dark:bg-[#22304a] text-[#0a1833] dark:text-white transition focus:outline-none focus:ring-2 focus:ring-[#4cd7ff] self-center"
+                aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+              >
+                {isDark ? <FiSun className="text-xl" /> : <FiMoon className="text-xl" />}
               </button>
             </div>
             <div className="flex-1" onClick={() => setMenuOpen(false)}></div>
