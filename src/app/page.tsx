@@ -222,10 +222,10 @@ export default function Home() {
         <div className="relative flex flex-col items-center justify-center w-full max-w-xl mx-auto">
           {/* Glowing effect behind profile photo */}
           <motion.div
-            className="absolute top-0 left-1/2 -translate-x-1/2 z-0 w-36 h-36 xs:w-56 xs:h-56 sm:w-80 sm:h-80 rounded-full bg-[#4cd7ff] blur-2xl opacity-60 pointer-events-none"
+            className="absolute top-0 left-1/2 -translate-x-1/2 z-0 w-40 h-40 xs:w-60 xs:h-60 sm:w-96 sm:h-96 rounded-full bg-[#4cd7ff]/80 dark:bg-[#4cd7ff] opacity-80 dark:opacity-60 pointer-events-none shadow-lg"
             style={{ filter: 'blur(48px)' }}
-            initial={{ scale: 0.95, opacity: 0.7 }}
-            animate={{ scale: [0.95, 1.08, 0.95], opacity: [0.7, 1, 0.7] }}
+            initial={{ scale: 0.95, opacity: 0.8 }}
+            animate={{ scale: [0.95, 1.08, 0.95], opacity: [0.8, 1, 0.8] }}
             transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
           />
           <Image
@@ -251,7 +251,7 @@ export default function Home() {
         </div>
       </section>
       {/* Insert About Me section after hero section */}
-      <motion.section id="about" className="max-w-3xl mx-auto py-8 xs:py-12 sm:py-20 px-2 xs:px-4 border-b border-[#4cd7ff22] flex flex-col md:flex-row items-center gap-4 xs:gap-6 sm:gap-8" initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.7, ease: 'easeOut' }}>
+      <motion.section id="about" className="max-w-3xl mx-auto py-8 xs:py-12 sm:py-20 px-2 xs:px-4 border-b border-gray-200 dark:border-[#4cd7ff22] flex flex-col md:flex-row items-center gap-4 xs:gap-6 sm:gap-8 bg-white dark:bg-[#18243a] rounded-xl shadow-md" initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.7, ease: 'easeOut' }}>
         <img src="/abhay1.jpg" alt="Abhay Singh" className="w-20 h-20 xs:w-24 xs:h-24 sm:w-32 sm:h-32 rounded-full object-cover border-4 border-[#4cd7ff] shadow-lg mb-4 md:mb-0" />
         <div>
           <h2 className="text-xl xs:text-2xl sm:text-3xl font-bold text-[#4cd7ff] mb-2">About Me</h2>
@@ -264,20 +264,20 @@ export default function Home() {
         </div>
       </motion.section>
       {/* Section Placeholders */}
-      <motion.section id="education" className="max-w-4xl mx-auto py-10 xs:py-16 sm:py-24 px-2 xs:px-4 border-b border-[#4cd7ff22]" initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.7, ease: 'easeOut' }}>
+      <motion.section id="education" className="max-w-4xl mx-auto py-10 xs:py-16 sm:py-24 px-2 xs:px-4 border-b border-gray-200 dark:border-[#4cd7ff22] bg-white dark:bg-[#18243a] rounded-xl shadow-md" initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.7, ease: 'easeOut' }}>
         <h2 className="text-xl xs:text-2xl sm:text-3xl font-bold text-[#4cd7ff] mb-4">Education</h2>
         <div className="text-sm xs:text-base sm:text-lg text-white/90">
           <div className="mb-2 font-semibold">COER University</div>
           <div>Bachelor of Technology in Computer Science and Engineering</div>
         </div>
       </motion.section>
-      <motion.section id="experience" className="max-w-4xl mx-auto py-10 xs:py-16 sm:py-24 px-2 xs:px-4 border-b border-[#4cd7ff22]" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={containerStagger}>
+      <motion.section id="experience" className="max-w-4xl mx-auto py-10 xs:py-16 sm:py-24 px-2 xs:px-4 border-b border-gray-200 dark:border-[#4cd7ff22] bg-white dark:bg-[#18243a] rounded-xl shadow-md" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={containerStagger}>
         <motion.h2 variants={headingVariants} className="text-xl xs:text-2xl sm:text-3xl font-bold text-[#4cd7ff] mb-4">Experience</motion.h2>
         <div className="space-y-6 xs:space-y-8">
           <motion.div
             custom={-100}
             variants={cardVariants}
-            className="bg-[#18243a] rounded-xl p-3 xs:p-4 sm:p-6 shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-2xl flex flex-col md:flex-row gap-3 xs:gap-4 items-start"
+            className="bg-white dark:bg-[#18243a] rounded-xl p-3 xs:p-4 sm:p-6 shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-2xl flex flex-col md:flex-row gap-3 xs:gap-4 items-start border border-gray-200 dark:border-[#4cd7ff22]"
             whileHover={{ scale: 1.05, boxShadow: '0 8px 32px #4cd7ff44' }}
           >
             <FaBriefcase className="text-[#4cd7ff] text-xl xs:text-2xl sm:text-3xl mt-1" aria-label="Experience" />
@@ -294,7 +294,7 @@ export default function Home() {
           <motion.div
             custom={100}
             variants={cardVariants}
-            className="bg-[#18243a] rounded-xl p-3 xs:p-4 sm:p-6 shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-2xl flex flex-col md:flex-row gap-3 xs:gap-4 items-start"
+            className="bg-white dark:bg-[#18243a] rounded-xl p-3 xs:p-4 sm:p-6 shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-2xl flex flex-col md:flex-row gap-3 xs:gap-4 items-start border border-gray-200 dark:border-[#4cd7ff22]"
             whileHover={{ scale: 1.05, boxShadow: '0 8px 32px #4cd7ff44' }}
           >
             <FaBriefcase className="text-[#4cd7ff] text-xl xs:text-2xl sm:text-3xl mt-1" aria-label="Experience" />
@@ -309,13 +309,13 @@ export default function Home() {
           </motion.div>
         </div>
       </motion.section>
-      <motion.section id="projects" className="max-w-4xl mx-auto py-10 xs:py-16 sm:py-24 px-2 xs:px-4 border-b border-[#4cd7ff22]" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={containerStagger}>
+      <motion.section id="projects" className="max-w-4xl mx-auto py-10 xs:py-16 sm:py-24 px-2 xs:px-4 border-b border-gray-200 dark:border-[#4cd7ff22] bg-white dark:bg-[#18243a] rounded-xl shadow-md" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={containerStagger}>
         <motion.h2 variants={headingVariants} className="text-xl xs:text-2xl sm:text-3xl font-bold text-[#4cd7ff] mb-4">Projects</motion.h2>
         <div className="space-y-6 xs:space-y-8">
           <motion.div
             custom={-100}
             variants={cardVariants}
-            className="bg-[#18243a] rounded-xl p-3 xs:p-4 sm:p-6 shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-2xl flex flex-col md:flex-row gap-3 xs:gap-4 items-start"
+            className="bg-white dark:bg-[#18243a] rounded-xl p-3 xs:p-4 sm:p-6 shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-2xl flex flex-col md:flex-row gap-3 xs:gap-4 items-start border border-gray-200 dark:border-[#4cd7ff22]"
             whileHover={{ scale: 1.05, boxShadow: '0 8px 32px #4cd7ff44' }}
           >
             <FaProjectDiagram className="text-[#4cd7ff] text-xl xs:text-2xl sm:text-3xl mt-1" aria-label="Project" />
@@ -341,7 +341,7 @@ export default function Home() {
           <motion.div
             custom={100}
             variants={cardVariants}
-            className="bg-[#18243a] rounded-xl p-3 xs:p-4 sm:p-6 shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-2xl flex flex-col md:flex-row gap-3 xs:gap-4 items-start"
+            className="bg-white dark:bg-[#18243a] rounded-xl p-3 xs:p-4 sm:p-6 shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-2xl flex flex-col md:flex-row gap-3 xs:gap-4 items-start border border-gray-200 dark:border-[#4cd7ff22]"
             whileHover={{ scale: 1.05, boxShadow: '0 8px 32px #4cd7ff44' }}
           >
             <FaProjectDiagram className="text-[#4cd7ff] text-xl xs:text-2xl sm:text-3xl mt-1" aria-label="Project" />
@@ -367,7 +367,7 @@ export default function Home() {
           <motion.div
             custom={-100}
             variants={cardVariants}
-            className="bg-[#18243a] rounded-xl p-3 xs:p-4 sm:p-6 shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-2xl flex flex-col md:flex-row gap-3 xs:gap-4 items-start"
+            className="bg-white dark:bg-[#18243a] rounded-xl p-3 xs:p-4 sm:p-6 shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-2xl flex flex-col md:flex-row gap-3 xs:gap-4 items-start border border-gray-200 dark:border-[#4cd7ff22]"
             whileHover={{ scale: 1.05, boxShadow: '0 8px 32px #4cd7ff44' }}
           >
             <FaProjectDiagram className="text-[#4cd7ff] text-xl xs:text-2xl sm:text-3xl mt-1" aria-label="Project" />
@@ -393,7 +393,7 @@ export default function Home() {
         </div>
       </motion.section>
       {/* Replace Skills section content with animated skill bars for main skills */}
-      <motion.section id="skills" className="max-w-4xl mx-auto py-10 xs:py-16 sm:py-24 px-2 xs:px-4 border-b border-[#4cd7ff22]" initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.7, ease: 'easeOut' }}>
+      <motion.section id="skills" className="max-w-4xl mx-auto py-10 xs:py-16 sm:py-24 px-2 xs:px-4 border-b border-gray-200 dark:border-[#4cd7ff22] bg-white dark:bg-[#18243a] rounded-xl shadow-md" initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.7, ease: 'easeOut' }}>
         <h2 className="text-xl xs:text-2xl sm:text-3xl font-bold text-[#4cd7ff] mb-4">Skills</h2>
         <div className="max-w-6xl mx-auto flex flex-col sm:flex-row flex-wrap items-center justify-center gap-y-4 gap-x-8">
           <SkillBar skill="Python" level={95} img="/python.png" />
@@ -408,7 +408,7 @@ export default function Home() {
         </div>
       </motion.section>
       {/* Add an array for certifications data */}
-      <motion.section id="certifications" className="max-w-4xl mx-auto py-10 xs:py-16 sm:py-24 px-2 xs:px-4 border-b border-[#4cd7ff22]" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={containerStagger}>
+      <motion.section id="certifications" className="max-w-4xl mx-auto py-10 xs:py-16 sm:py-24 px-2 xs:px-4 border-b border-gray-200 dark:border-[#4cd7ff22] bg-white dark:bg-[#18243a] rounded-xl shadow-md" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={containerStagger}>
         <motion.h2 variants={headingVariants} className="text-xl xs:text-2xl sm:text-3xl font-bold text-[#4cd7ff] mb-8">Certifications & Achievements</motion.h2>
         <div className="flex flex-col sm:flex-row gap-6 sm:gap-8 items-stretch justify-center">
           {certifications.map((cert, idx) => (
@@ -418,7 +418,7 @@ export default function Home() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.7, delay: idx * 0.15, ease: [0.42, 0, 0.58, 1] }}
-              className="bg-[#18243a] rounded-xl p-6 shadow-lg flex flex-col items-center text-center w-80 min-h-[220px] flex-1 hover:scale-105 hover:shadow-2xl transition-transform duration-300 border border-[#4cd7ff22]"
+              className="bg-white dark:bg-[#18243a] rounded-xl p-6 shadow-lg flex flex-col items-center text-center w-80 min-h-[220px] flex-1 hover:scale-105 hover:shadow-2xl transition-transform duration-300 border border-gray-200 dark:border-[#4cd7ff22]"
               whileHover={{ scale: 1.05, boxShadow: '0 8px 32px #4cd7ff44' }}
             >
               <div className="mb-3">{cert.icon}</div>
@@ -429,7 +429,7 @@ export default function Home() {
         </div>
       </motion.section>
       {/* Contact section with animated fields and floating labels */}
-      <motion.section id="contact" className="max-w-4xl mx-auto py-10 xs:py-16 sm:py-24 px-2 xs:px-4" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={containerStagger}>
+      <motion.section id="contact" className="max-w-4xl mx-auto py-10 xs:py-16 sm:py-24 px-2 xs:px-4 bg-white dark:bg-[#18243a] rounded-xl shadow-md" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={containerStagger}>
         <motion.h2 variants={headingVariants} className="text-xl xs:text-2xl sm:text-3xl font-bold text-[#4cd7ff] mb-4">Contact</motion.h2>
         <ContactForm />
         <div className="flex gap-4 mt-8 justify-center">
@@ -511,7 +511,7 @@ function ContactForm() {
   ];
 
   return (
-    <form onSubmit={handleSubmit} className="bg-[#18243a] rounded-xl p-8 shadow-lg max-w-xl mx-auto flex flex-col gap-6">
+    <form onSubmit={handleSubmit} className="bg-white dark:bg-[#18243a] rounded-xl p-8 shadow-lg max-w-xl mx-auto flex flex-col gap-6 border border-gray-200 dark:border-[#4cd7ff22]">
       {success && (
         <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="flex flex-col items-center text-green-400 font-semibold mb-2">
           <span className="text-4xl mb-2">✔️</span>
@@ -532,7 +532,7 @@ function ContactForm() {
             {field.type !== "textarea" ? (
               <input
                 type={field.type}
-                className={`peer px-4 py-2 rounded bg-[#22304a] text-white focus:outline-none focus:ring-2 focus:ring-[#4cd7ff] w-full placeholder-transparent`}
+                className={`peer px-4 py-2 rounded bg-[#f8fafc] dark:bg-[#22304a] text-[#0a1833] dark:text-white focus:outline-none focus:ring-2 focus:ring-[#4cd7ff] w-full placeholder-transparent`}
                 value={field.value}
                 onChange={e => field.setValue(e.target.value)}
                 placeholder={field.label}
@@ -541,14 +541,14 @@ function ContactForm() {
               />
             ) : (
               <textarea
-                className={`peer px-4 py-2 rounded bg-[#22304a] text-white focus:outline-none focus:ring-2 focus:ring-[#4cd7ff] min-h-[120px] w-full placeholder-transparent`}
+                className={`peer px-4 py-2 rounded bg-[#f8fafc] dark:bg-[#22304a] text-[#0a1833] dark:text-white focus:outline-none focus:ring-2 focus:ring-[#4cd7ff] min-h-[120px] w-full placeholder-transparent`}
                 value={field.value}
                 onChange={e => field.setValue(e.target.value)}
                 placeholder={field.label}
                 disabled={loading}
               />
             )}
-            <label className="absolute left-4 top-2 text-white/60 text-sm pointer-events-none transition-all duration-200 peer-placeholder-shown:top-2 peer-placeholder-shown:text-white/60 peer-focus:-top-5 peer-focus:text-[#4cd7ff] peer-focus:text-xs peer-focus:font-bold bg-[#18243a] px-1">{field.label}</label>
+            <label className="absolute left-4 top-2 text-[#0a1833]/60 dark:text-white/60 text-sm pointer-events-none transition-all duration-200 peer-placeholder-shown:top-2 peer-placeholder-shown:text-[#0a1833]/60 dark:peer-placeholder-shown:text-white/60 peer-focus:-top-5 peer-focus:text-[#4cd7ff] peer-focus:text-xs peer-focus:font-bold bg-white dark:bg-[#18243a] px-1">{field.label}</label>
           </motion.div>
         ))}
       </div>
@@ -602,7 +602,7 @@ function SkillBar({ skill, level, img }: { skill: string; level: number; img: st
             </motion.span>
           </div>
         </div>
-        <span className="text-white/90 font-medium text-lg">{skill}</span>
+        <span className="text-[#0a1833] dark:text-white/90 font-medium text-lg">{skill}</span>
       </div>
     </motion.div>
   );
