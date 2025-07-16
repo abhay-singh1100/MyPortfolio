@@ -1,16 +1,14 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { FaLinkedin, FaTwitter, FaGithub, FaInstagram, FaEnvelope, FaBriefcase, FaProjectDiagram, FaArrowUp, FaBars, FaTimes } from "react-icons/fa";
-import { FiSun, FiMoon } from "react-icons/fi";
-import { motion } from "framer-motion";
+import { motion, useAnimation, useInView } from "framer-motion";
 import Image from "next/image";
 import emailjs from '@emailjs/browser';
-import { useTheme } from "./layout";
 
 // Animation variants for staggered cards and headings (move to top-level)
 const cardVariants = {
   hidden: (direction: number) => ({ opacity: 0, x: direction }),
-  visible: { opacity: 1, x: 0, transition: { duration: 0.7 } },
+  visible: { opacity: 1, x: 0, transition: { duration: 0.7, ease: [[0.42, 0, 0.58, 1]] } },
 };
 const containerStagger = {
   visible: {
@@ -21,7 +19,7 @@ const containerStagger = {
 };
 const headingVariants = {
   hidden: { opacity: 0, y: 30 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.7 } },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [[0.42, 0, 0.58, 1]] } },
 };
 
 function scrollToSection(id: string) {
@@ -59,8 +57,6 @@ function TypingEffect({ texts }: { texts: string[] }) {
 
 function Navbar({ activeSection }: { activeSection: string }) {
   const [menuOpen, setMenuOpen] = useState(false);
-  const { theme, setTheme } = useTheme();
-  const isDark = theme === 'dark';
 
   // Prevent scrolling when menu is open
   useEffect(() => {
@@ -95,14 +91,6 @@ function Navbar({ activeSection }: { activeSection: string }) {
           >
             <FaEnvelope className="text-xl" aria-label="Email" />
             <span>GET IN TOUCH</span>
-          </button>
-          {/* Theme toggle button */}
-          <button
-            onClick={() => setTheme(isDark ? 'light' : 'dark')}
-            className="ml-4 p-2 rounded-full border border-transparent hover:border-[#4cd7ff] bg-white/60 dark:bg-[#22304a] text-[#0a1833] dark:text-white transition focus:outline-none focus:ring-2 focus:ring-[#4cd7ff]"
-            aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
-          >
-            {isDark ? <FiSun className="text-xl" /> : <FiMoon className="text-xl" />}
           </button>
         </div>
         {/* Mobile Hamburger */}
@@ -155,14 +143,6 @@ function Navbar({ activeSection }: { activeSection: string }) {
               >
                 <FaEnvelope className="text-xl" aria-label="Email" />
                 <span>GET IN TOUCH</span>
-              </button>
-              {/* Theme toggle for mobile */}
-              <button
-                onClick={() => setTheme(isDark ? 'light' : 'dark')}
-                className="mt-4 p-2 rounded-full border border-transparent hover:border-[#4cd7ff] bg-white/60 dark:bg-[#22304a] text-[#0a1833] dark:text-white transition focus:outline-none focus:ring-2 focus:ring-[#4cd7ff] self-center"
-                aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
-              >
-                {isDark ? <FiSun className="text-xl" /> : <FiMoon className="text-xl" />}
               </button>
             </div>
             <div className="flex-1" onClick={() => setMenuOpen(false)}></div>
@@ -240,14 +220,6 @@ export default function Home() {
           <div className="rounded-full border border-gray-300 dark:border-blue-200 w-[90vw] h-[90vw] max-w-[900px] max-h-[900px] min-w-[220px] min-h-[220px] mx-auto" />
         </div>
         <div className="relative flex flex-col items-center justify-center w-full max-w-xl mx-auto">
-          {/* Glowing effect behind profile photo */}
-          <motion.div
-            className="absolute top-0 left-1/2 -translate-x-1/2 z-0 w-40 h-40 xs:w-60 xs:h-60 sm:w-96 sm:h-96 rounded-full bg-[#4cd7ff]/80 dark:bg-[#4cd7ff] opacity-80 dark:opacity-60 pointer-events-none shadow-lg"
-            style={{ filter: 'blur(48px)' }}
-            initial={{ scale: 0.95, opacity: 0.8 }}
-            animate={{ scale: [0.95, 1.08, 0.95], opacity: [0.8, 1, 0.8] }}
-            transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
-          />
           <Image
             src="/abhay1.jpg"
             alt="Profile"
@@ -271,7 +243,7 @@ export default function Home() {
         </div>
       </section>
       {/* Insert About Me section after hero section */}
-      <motion.section id="about" className="max-w-3xl mx-auto py-8 xs:py-12 sm:py-20 px-2 xs:px-4 border-b border-gray-200 dark:border-[#4cd7ff22] flex flex-col md:flex-row items-center gap-4 xs:gap-6 sm:gap-8 bg-white dark:bg-[#18243a] rounded-xl shadow-md" initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.7, ease: 'easeOut' }}>
+      <motion.section id="about" className="max-w-3xl mx-auto py-8 xs:py-12 sm:py-20 px-2 xs:px-4 border-b border-[#4cd7ff22] flex flex-col md:flex-row items-center gap-4 xs:gap-6 sm:gap-8" initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.7, ease: 'easeOut' }}>
         <img src="/abhay1.jpg" alt="Abhay Singh" className="w-20 h-20 xs:w-24 xs:h-24 sm:w-32 sm:h-32 rounded-full object-cover border-4 border-[#4cd7ff] shadow-lg mb-4 md:mb-0" />
         <div>
           <h2 className="text-xl xs:text-2xl sm:text-3xl font-bold text-[#4cd7ff] mb-2">About Me</h2>
@@ -284,20 +256,20 @@ export default function Home() {
         </div>
       </motion.section>
       {/* Section Placeholders */}
-      <motion.section id="education" className="max-w-4xl mx-auto py-10 xs:py-16 sm:py-24 px-2 xs:px-4 border-b border-gray-200 dark:border-[#4cd7ff22] bg-white dark:bg-[#18243a] rounded-xl shadow-md" initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.7, ease: 'easeOut' }}>
+      <motion.section id="education" className="max-w-4xl mx-auto py-10 xs:py-16 sm:py-24 px-2 xs:px-4 border-b border-[#4cd7ff22]" initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.7, ease: 'easeOut' }}>
         <h2 className="text-xl xs:text-2xl sm:text-3xl font-bold text-[#4cd7ff] mb-4">Education</h2>
         <div className="text-sm xs:text-base sm:text-lg text-white/90">
           <div className="mb-2 font-semibold">COER University</div>
           <div>Bachelor of Technology in Computer Science and Engineering</div>
         </div>
       </motion.section>
-      <motion.section id="experience" className="max-w-4xl mx-auto py-10 xs:py-16 sm:py-24 px-2 xs:px-4 border-b border-gray-200 dark:border-[#4cd7ff22] bg-white dark:bg-[#18243a] rounded-xl shadow-md" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={containerStagger}>
+      <motion.section id="experience" className="max-w-4xl mx-auto py-10 xs:py-16 sm:py-24 px-2 xs:px-4 border-b border-[#4cd7ff22]" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={containerStagger}>
         <motion.h2 variants={headingVariants} className="text-xl xs:text-2xl sm:text-3xl font-bold text-[#4cd7ff] mb-4">Experience</motion.h2>
         <div className="space-y-6 xs:space-y-8">
           <motion.div
             custom={-100}
             variants={cardVariants}
-            className="bg-white dark:bg-[#18243a] rounded-xl p-3 xs:p-4 sm:p-6 shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-2xl flex flex-col md:flex-row gap-3 xs:gap-4 items-start border border-gray-200 dark:border-[#4cd7ff22]"
+            className="bg-[#18243a] rounded-xl p-3 xs:p-4 sm:p-6 shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-2xl flex flex-col md:flex-row gap-3 xs:gap-4 items-start"
             whileHover={{ scale: 1.05, boxShadow: '0 8px 32px #4cd7ff44' }}
           >
             <FaBriefcase className="text-[#4cd7ff] text-xl xs:text-2xl sm:text-3xl mt-1" aria-label="Experience" />
@@ -314,7 +286,7 @@ export default function Home() {
           <motion.div
             custom={100}
             variants={cardVariants}
-            className="bg-white dark:bg-[#18243a] rounded-xl p-3 xs:p-4 sm:p-6 shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-2xl flex flex-col md:flex-row gap-3 xs:gap-4 items-start border border-gray-200 dark:border-[#4cd7ff22]"
+            className="bg-[#18243a] rounded-xl p-3 xs:p-4 sm:p-6 shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-2xl flex flex-col md:flex-row gap-3 xs:gap-4 items-start"
             whileHover={{ scale: 1.05, boxShadow: '0 8px 32px #4cd7ff44' }}
           >
             <FaBriefcase className="text-[#4cd7ff] text-xl xs:text-2xl sm:text-3xl mt-1" aria-label="Experience" />
@@ -329,13 +301,13 @@ export default function Home() {
           </motion.div>
         </div>
       </motion.section>
-      <motion.section id="projects" className="max-w-4xl mx-auto py-10 xs:py-16 sm:py-24 px-2 xs:px-4 border-b border-gray-200 dark:border-[#4cd7ff22] bg-white dark:bg-[#18243a] rounded-xl shadow-md" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={containerStagger}>
+      <motion.section id="projects" className="max-w-4xl mx-auto py-10 xs:py-16 sm:py-24 px-2 xs:px-4 border-b border-[#4cd7ff22]" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={containerStagger}>
         <motion.h2 variants={headingVariants} className="text-xl xs:text-2xl sm:text-3xl font-bold text-[#4cd7ff] mb-4">Projects</motion.h2>
         <div className="space-y-6 xs:space-y-8">
           <motion.div
             custom={-100}
             variants={cardVariants}
-            className="bg-white dark:bg-[#18243a] rounded-xl p-3 xs:p-4 sm:p-6 shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-2xl flex flex-col md:flex-row gap-3 xs:gap-4 items-start border border-gray-200 dark:border-[#4cd7ff22]"
+            className="bg-[#18243a] rounded-xl p-3 xs:p-4 sm:p-6 shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-2xl flex flex-col md:flex-row gap-3 xs:gap-4 items-start"
             whileHover={{ scale: 1.05, boxShadow: '0 8px 32px #4cd7ff44' }}
           >
             <FaProjectDiagram className="text-[#4cd7ff] text-xl xs:text-2xl sm:text-3xl mt-1" aria-label="Project" />
@@ -361,7 +333,7 @@ export default function Home() {
           <motion.div
             custom={100}
             variants={cardVariants}
-            className="bg-white dark:bg-[#18243a] rounded-xl p-3 xs:p-4 sm:p-6 shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-2xl flex flex-col md:flex-row gap-3 xs:gap-4 items-start border border-gray-200 dark:border-[#4cd7ff22]"
+            className="bg-[#18243a] rounded-xl p-3 xs:p-4 sm:p-6 shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-2xl flex flex-col md:flex-row gap-3 xs:gap-4 items-start"
             whileHover={{ scale: 1.05, boxShadow: '0 8px 32px #4cd7ff44' }}
           >
             <FaProjectDiagram className="text-[#4cd7ff] text-xl xs:text-2xl sm:text-3xl mt-1" aria-label="Project" />
@@ -387,7 +359,7 @@ export default function Home() {
           <motion.div
             custom={-100}
             variants={cardVariants}
-            className="bg-white dark:bg-[#18243a] rounded-xl p-3 xs:p-4 sm:p-6 shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-2xl flex flex-col md:flex-row gap-3 xs:gap-4 items-start border border-gray-200 dark:border-[#4cd7ff22]"
+            className="bg-[#18243a] rounded-xl p-3 xs:p-4 sm:p-6 shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-2xl flex flex-col md:flex-row gap-3 xs:gap-4 items-start"
             whileHover={{ scale: 1.05, boxShadow: '0 8px 32px #4cd7ff44' }}
           >
             <FaProjectDiagram className="text-[#4cd7ff] text-xl xs:text-2xl sm:text-3xl mt-1" aria-label="Project" />
@@ -413,7 +385,7 @@ export default function Home() {
         </div>
       </motion.section>
       {/* Replace Skills section content with animated skill bars for main skills */}
-      <motion.section id="skills" className="max-w-4xl mx-auto py-10 xs:py-16 sm:py-24 px-2 xs:px-4 border-b border-gray-200 dark:border-[#4cd7ff22] bg-white dark:bg-[#18243a] rounded-xl shadow-md" initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.7, ease: 'easeOut' }}>
+      <motion.section id="skills" className="max-w-4xl mx-auto py-10 xs:py-16 sm:py-24 px-2 xs:px-4 border-b border-[#4cd7ff22]" initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.7, ease: 'easeOut' }}>
         <h2 className="text-xl xs:text-2xl sm:text-3xl font-bold text-[#4cd7ff] mb-4">Skills</h2>
         <div className="max-w-6xl mx-auto flex flex-col sm:flex-row flex-wrap items-center justify-center gap-y-4 gap-x-8">
           <SkillBar skill="Python" level={95} img="/python.png" />
@@ -428,7 +400,7 @@ export default function Home() {
         </div>
       </motion.section>
       {/* Add an array for certifications data */}
-      <motion.section id="certifications" className="max-w-4xl mx-auto py-10 xs:py-16 sm:py-24 px-2 xs:px-4 border-b border-gray-200 dark:border-[#4cd7ff22] bg-white dark:bg-[#18243a] rounded-xl shadow-md" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={containerStagger}>
+      <motion.section id="certifications" className="max-w-4xl mx-auto py-10 xs:py-16 sm:py-24 px-2 xs:px-4 border-b border-[#4cd7ff22]" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={containerStagger}>
         <motion.h2 variants={headingVariants} className="text-xl xs:text-2xl sm:text-3xl font-bold text-[#4cd7ff] mb-8">Certifications & Achievements</motion.h2>
         <div className="flex flex-col sm:flex-row gap-6 sm:gap-8 items-stretch justify-center">
           {certifications.map((cert, idx) => (
@@ -438,7 +410,7 @@ export default function Home() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.7, delay: idx * 0.15, ease: [0.42, 0, 0.58, 1] }}
-              className="bg-white dark:bg-[#18243a] rounded-xl p-6 shadow-lg flex flex-col items-center text-center w-80 min-h-[220px] flex-1 hover:scale-105 hover:shadow-2xl transition-transform duration-300 border border-gray-200 dark:border-[#4cd7ff22]"
+              className="bg-[#18243a] rounded-xl p-6 shadow-lg flex flex-col items-center text-center w-80 min-h-[220px] flex-1 hover:scale-105 hover:shadow-2xl transition-transform duration-300 border border-[#4cd7ff22]"
               whileHover={{ scale: 1.05, boxShadow: '0 8px 32px #4cd7ff44' }}
             >
               <div className="mb-3">{cert.icon}</div>
@@ -449,7 +421,7 @@ export default function Home() {
         </div>
       </motion.section>
       {/* Contact section with animated fields and floating labels */}
-      <motion.section id="contact" className="max-w-4xl mx-auto py-10 xs:py-16 sm:py-24 px-2 xs:px-4 bg-white dark:bg-[#18243a] rounded-xl shadow-md" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={containerStagger}>
+      <motion.section id="contact" className="max-w-4xl mx-auto py-10 xs:py-16 sm:py-24 px-2 xs:px-4" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={containerStagger}>
         <motion.h2 variants={headingVariants} className="text-xl xs:text-2xl sm:text-3xl font-bold text-[#4cd7ff] mb-4">Contact</motion.h2>
         <ContactForm />
         <div className="flex gap-4 mt-8 justify-center">
@@ -531,7 +503,7 @@ function ContactForm() {
   ];
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white dark:bg-[#18243a] rounded-xl p-8 shadow-lg max-w-xl mx-auto flex flex-col gap-6 border border-gray-200 dark:border-[#4cd7ff22]">
+    <form onSubmit={handleSubmit} className="bg-[#18243a] rounded-xl p-8 shadow-lg max-w-xl mx-auto flex flex-col gap-6">
       {success && (
         <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="flex flex-col items-center text-green-400 font-semibold mb-2">
           <span className="text-4xl mb-2">✔️</span>
@@ -552,7 +524,7 @@ function ContactForm() {
             {field.type !== "textarea" ? (
               <input
                 type={field.type}
-                className={`peer px-4 py-2 rounded bg-[#f8fafc] dark:bg-[#22304a] text-[#0a1833] dark:text-white focus:outline-none focus:ring-2 focus:ring-[#4cd7ff] w-full placeholder-transparent`}
+                className={`peer px-4 py-2 rounded bg-[#22304a] text-white focus:outline-none focus:ring-2 focus:ring-[#4cd7ff] w-full placeholder-transparent`}
                 value={field.value}
                 onChange={e => field.setValue(e.target.value)}
                 placeholder={field.label}
@@ -561,14 +533,14 @@ function ContactForm() {
               />
             ) : (
               <textarea
-                className={`peer px-4 py-2 rounded bg-[#f8fafc] dark:bg-[#22304a] text-[#0a1833] dark:text-white focus:outline-none focus:ring-2 focus:ring-[#4cd7ff] min-h-[120px] w-full placeholder-transparent`}
+                className={`peer px-4 py-2 rounded bg-[#22304a] text-white focus:outline-none focus:ring-2 focus:ring-[#4cd7ff] min-h-[120px] w-full placeholder-transparent`}
                 value={field.value}
                 onChange={e => field.setValue(e.target.value)}
                 placeholder={field.label}
                 disabled={loading}
               />
             )}
-            <label className="absolute left-4 top-2 text-[#0a1833]/60 dark:text-white/60 text-sm pointer-events-none transition-all duration-200 peer-placeholder-shown:top-2 peer-placeholder-shown:text-[#0a1833]/60 dark:peer-placeholder-shown:text-white/60 peer-focus:-top-5 peer-focus:text-[#4cd7ff] peer-focus:text-xs peer-focus:font-bold bg-white dark:bg-[#18243a] px-1">{field.label}</label>
+            <label className="absolute left-4 top-2 text-white/60 text-sm pointer-events-none transition-all duration-200 peer-placeholder-shown:top-2 peer-placeholder-shown:text-white/60 peer-focus:-top-5 peer-focus:text-[#4cd7ff] peer-focus:text-xs peer-focus:font-bold bg-[#18243a] px-1">{field.label}</label>
           </motion.div>
         ))}
       </div>
@@ -587,42 +559,45 @@ function ContactForm() {
 
 // Animate skill bar percentage on reveal
 function SkillBar({ skill, level, img }: { skill: string; level: number; img: string }) {
-  const [hovered, setHovered] = React.useState(false);
+  const ref = React.useRef(null);
+  const isInView = useInView(ref, { once: true, amount: 0.3 });
+  const controls = useAnimation();
+  React.useEffect(() => {
+    if (isInView) {
+      controls.start({ opacity: 1, scale: 1 });
+    }
+  }, [isInView, controls]);
   return (
     <motion.div
+      ref={ref}
       initial={{ opacity: 0, scale: 0.8 }}
-      animate={{ opacity: 1, scale: 1 }}
+      animate={controls}
       transition={{ duration: 0.5, ease: 'easeOut' }}
       className="w-full sm:w-auto mb-0 flex flex-col items-center hover:scale-105 hover:shadow-lg transition-transform duration-300"
       whileHover={{ scale: 1.05, boxShadow: '0 8px 32px #4cd7ff44' }}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      onFocus={() => setHovered(true)}
-      onBlur={() => setHovered(false)}
-      tabIndex={0}
     >
       <div className="flex items-center gap-4 w-full justify-center">
         <div className="relative group">
-          <div className="w-16 h-16 rounded bg-white/10 p-2 cursor-pointer transition-all duration-300 flex items-center justify-center overflow-hidden">
-            <motion.img
-              src={img}
-              alt={skill + ' icon'}
-              className="w-12 h-12 rounded transition-all duration-300"
-              initial={false}
-              animate={hovered ? { opacity: 0, scale: 0.9 } : { opacity: 1, scale: 1 }}
-              transition={{ duration: 0.3, ease: 'easeOut' }}
-            />
-            <motion.span
-              className="absolute inset-0 flex items-center justify-center text-[#4cd7ff] font-bold text-lg animate-pulse"
-              initial={false}
-              animate={hovered ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0 }}
-              transition={{ duration: 0.3, ease: 'easeOut' }}
+          <div className="w-16 h-16 rounded bg-white/10 p-2 cursor-pointer transition-all duration-300 flex items-center justify-center hover:scale-110 hover:bg-white/20">
+            <img src={img} alt={skill + ' icon'} className="w-12 h-12 rounded transition-all duration-300 group-hover:opacity-0 group-hover:scale-90" />
+            <motion.div
+              className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:scale-110"
+              initial={{ opacity: 0 }}
+              animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+              transition={{ delay: 0.2, duration: 0.5, ease: 'easeOut' }}
             >
-              {level}%
-            </motion.span>
+              <motion.span
+                className="text-[#4cd7ff] font-bold text-lg animate-pulse"
+                initial={{ scale: 0 }}
+                animate={isInView ? { scale: 1 } : { scale: 0 }}
+                transition={{ delay: 0.3, duration: 0.5, ease: 'easeOut' }}
+              >
+                {level}%
+              </motion.span>
+            </motion.div>
           </div>
         </div>
-        <span className="text-[#0a1833] dark:text-white/90 font-medium text-lg">{skill}</span>
+        <span className="text-white/90 font-medium text-lg">{skill}</span>
       </div>
     </motion.div>
   );
