@@ -4,6 +4,7 @@ import { FaLinkedin, FaTwitter, FaGithub, FaInstagram, FaEnvelope, FaBriefcase, 
 import { motion, useAnimation, useInView, easeInOut } from "framer-motion";
 import Image from "next/image";
 import emailjs from '@emailjs/browser';
+import ParticleBackground from './components/ParticleBackground';
 
 // Animation variants for staggered cards and headings (move to top-level)
 const cardVariants = {
@@ -215,19 +216,43 @@ export default function Home() {
     <main className="relative min-h-screen flex flex-col items-center justify-center bg-white dark:bg-gradient-to-br dark:from-[#0a1833] dark:to-[#1a2746] text-gray-900 dark:text-white overflow-x-hidden">
       <Navbar activeSection={activeSection} />
       <section id="hero" className="relative z-10 flex flex-col items-center justify-center min-h-screen w-full pt-24 overflow-hidden px-2 xs:px-4 sm:px-8">
-        {/* Nav links at the top of hero */}
+        <ParticleBackground />
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none">
-          <div className="rounded-full border border-gray-300 dark:border-blue-200 w-[90vw] h-[90vw] max-w-[900px] max-h-[900px] min-w-[220px] min-h-[220px] mx-auto" />
+          <div className="rounded-full border border-gray-300 dark:border-[#4cd7ff33] w-[90vw] h-[90vw] max-w-[900px] max-h-[900px] min-w-[220px] min-h-[220px] mx-auto backdrop-blur-sm bg-gradient-to-r from-transparent via-[#4cd7ff05] to-transparent" />
         </div>
         <div className="relative flex flex-col items-center justify-center w-full max-w-xl mx-auto">
-          <Image
-            src="/abhay1.jpg"
-            alt="Profile"
-            width={500}
-            height={500}
-            className="w-28 h-28 xs:w-40 xs:h-40 sm:w-64 sm:h-64 rounded-full object-cover border-4 border-white shadow-lg mb-6 z-10"
-            priority
-          />
+          <motion.div
+            initial={{ scale: 0, rotate: -180 }}
+            animate={{ scale: 1, rotate: 0 }}
+            transition={{ 
+              type: "spring",
+              stiffness: 260,
+              damping: 20,
+              duration: 1.5
+            }}
+            className="relative"
+          >
+            <motion.div
+              animate={{ 
+                scale: [1, 1.02, 1],
+                rotate: [0, 5, 0]
+              }}
+              transition={{
+                duration: 5,
+                repeat: Infinity,
+                repeatType: "reverse"
+              }}
+              className="absolute inset-0 rounded-full bg-gradient-to-r from-[#4cd7ff] to-[#ff4c60] blur-lg opacity-30"
+            />
+            <Image
+              src="/abhay1.jpg"
+              alt="Profile"
+              width={500}
+              height={500}
+              className="relative w-28 h-28 xs:w-40 xs:h-40 sm:w-64 sm:h-64 rounded-full object-cover border-4 border-white/50 shadow-lg mb-6 z-10 hover:scale-105 transition-transform duration-300"
+              priority
+            />
+          </motion.div>
           {/* Social icons below profile photo */}
           <div className="flex flex-wrap items-center gap-4 mb-6 justify-center">
             <a href="https://www.linkedin.com/in/abhay-singh-1112as" target="_blank" rel="noopener noreferrer" className="text-gray-700 dark:text-white text-2xl sm:text-3xl hover:text-[#0077b5] p-2 rounded focus:outline-none focus:ring-2 focus:ring-[#4cd7ff]" aria-label="LinkedIn"><FaLinkedin /></a>
@@ -244,7 +269,13 @@ export default function Home() {
       </section>
       {/* Insert About Me section after hero section */}
       <motion.section id="about" className="max-w-3xl mx-auto py-8 xs:py-12 sm:py-20 px-2 xs:px-4 border-b border-[#4cd7ff22] flex flex-col md:flex-row items-center gap-4 xs:gap-6 sm:gap-8" initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.7, ease: 'easeOut' }}>
-        <img src="/abhay1.jpg" alt="Abhay Singh" className="w-20 h-20 xs:w-24 xs:h-24 sm:w-32 sm:h-32 rounded-full object-cover border-4 border-[#4cd7ff] shadow-lg mb-4 md:mb-0" />
+        <Image 
+          src="/abhay1.jpg" 
+          alt="Abhay Singh" 
+          width={128}
+          height={128}
+          className="w-20 h-20 xs:w-24 xs:h-24 sm:w-32 sm:h-32 rounded-full object-cover border-4 border-[#4cd7ff] shadow-lg mb-4 md:mb-0" 
+        />
         <div>
           <h2 className="text-xl xs:text-2xl sm:text-3xl font-bold text-[#4cd7ff] mb-2">About Me</h2>
           <p className="text-sm xs:text-base sm:text-lg text-white/90 mb-4">Hi, I&apos;m Abhay Singh—a passionate software developer and AI/ML enthusiast. I love building intelligent solutions, automating workflows, and turning ideas into robust products. My background spans Software development, Machine learning, and data-driven applications.</p>
@@ -579,7 +610,13 @@ function SkillBar({ skill, level, img }: { skill: string; level: number; img: st
       <div className="flex items-center gap-4 w-full justify-center">
         <div className="relative group">
           <div className="w-16 h-16 rounded bg-white/10 p-2 cursor-pointer transition-all duration-300 flex items-center justify-center hover:scale-110 hover:bg-white/20">
-            <img src={img} alt={skill + ' icon'} className="w-12 h-12 rounded transition-all duration-300 group-hover:opacity-0 group-hover:scale-90" />
+            <Image 
+              src={img} 
+              alt={skill + ' icon'} 
+              width={48}
+              height={48}
+              className="w-12 h-12 rounded transition-all duration-300 group-hover:opacity-0 group-hover:scale-90" 
+            />
             <motion.div
               className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:scale-110"
               initial={{ opacity: 0 }}
