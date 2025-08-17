@@ -8,7 +8,7 @@ import emailjs from '@emailjs/browser';
 // Animation variants for staggered cards and headings (move to top-level)
 const cardVariants = {
   hidden: (direction: number) => ({ opacity: 0, x: direction }),
-  visible: { opacity: 1, x: 0, transition: { duration: 0.7, ease: [[0.42, 0, 0.58, 1]] } },
+  visible: { opacity: 1, x: 0, transition: { duration: 0.7, ease: "easeInOut" } },
 };
 const containerStagger = {
   visible: {
